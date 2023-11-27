@@ -6,13 +6,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
-import ink.anh.lingo.AnhyLingo;
-import ink.anh.lingo.Permissions;
 import ink.anh.lingo.api.Translator;
 import ink.anh.lingo.messages.MessageType;
 import ink.anh.lingo.messages.Messenger;
 import ink.anh.lingo.utils.LangUtils;
 import ink.anh.shop.AnhyShop;
+import ink.anh.shop.Permissions;
 import ink.anh.shop.traders.TradesManager;
 
 public class CommandShop implements CommandExecutor {
@@ -92,7 +91,7 @@ public class CommandShop implements CommandExecutor {
 	    }
 	    
         if (shopPlugin.getConfigurationManager().reload()) {
-            sendMessage(sender, Translator.translateKyeWorld("lingo_language_reloaded ", langs, AnhyLingo.getInstance().getLanguageSystemChat()), MessageType.NORMAL);
+            sendMessage(sender, Translator.translateKyeWorld("lingo_language_reloaded ", langs, shopPlugin.getLanguageManager()), MessageType.NORMAL);
             return true;
         }
         return false;
@@ -117,7 +116,7 @@ public class CommandShop implements CommandExecutor {
 
             // Перевіряємо наявність дозволу у гравця
             if (!player.hasPermission(permission)) {
-                sendMessage(sender, Translator.translateKyeWorld("lingo_err_not_have_permission ", langs, AnhyLingo.getInstance().getLanguageSystemChat()), MessageType.ERROR);
+                sendMessage(sender, Translator.translateKyeWorld("lingo_err_not_have_permission ", langs, shopPlugin.getLanguageManager()), MessageType.ERROR);
                 return langs;
             }
         }

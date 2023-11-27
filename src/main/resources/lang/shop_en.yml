@@ -6,3 +6,18 @@
 # ██║░░██║██║░╚███║██║░░██║░░░██║░░░██████╔╝██║░░██║╚█████╔╝██║░░░░░
 # ╚═╝░░╚═╝╚═╝░░╚══╝╚═╝░░╚═╝░░░╚═╝░░░╚═════╝░╚═╝░░╚═╝░╚════╝░╚═╝░░░░░
 #
+# Internal system messages of the AnhyShop plugin
+#
+# 1 General
+lingo_err_not_have_permission: "You do not have permission to use this command."
+lingo_err_not_alloved_config: "The command is not allowed in the configuration settings."
+lingo_err_command_format: "Command format: "
+#
+# 2 Loading configurations
+lingo_err_folder_is_empty: "The folder is empty or an error occurred while reading it."
+lingo_err_folder_is_notexist: "The folder does not exist or it is not a folder."
+lingo_err_reloading_configuration: "Error reloading configuration."
+lingo_created_default_configuration: "Default configuration created."
+lingo_configuration_reloaded: "Configuration reloaded."
+lingo_language_reloaded: "Language files and configuration reloaded."
+#
