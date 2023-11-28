@@ -21,12 +21,12 @@ public class SQLite extends Database{
     }
     		
     public Connection getSQLConnection() {
-        File dataFolder = new File(AnhyShop.getInstance().getDataFolder(), dbname+".db");
+        File dataFolder = new File(AnhyShop.getInstance().getDataFolder(), dbname+"s.db");
         if (!dataFolder.exists()){
             try {
                 dataFolder.createNewFile();
             } catch (IOException e) {
-            	AnhyShop.getInstance().getLogger().log(Level.SEVERE, "File write error: "+dbname+".db");
+            	AnhyShop.getInstance().getLogger().log(Level.SEVERE, "File write error: "+dbname+"s.db");
             }
         }
         try {

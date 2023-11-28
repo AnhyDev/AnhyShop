@@ -204,8 +204,12 @@ public class MerchantTradeManager {
         }
 
         // Відкриття торгів для гравця
-        VirtualVillager.openTrading(player, trader);
-        sendMessage(sender, "Торги відкрито для гравця " + playerName, MessageType.NORMAL);
+        if (VirtualVillager.openTrading(player, trader)) {
+            sendMessage(sender, "Торги відкрито для гравця " + playerName, MessageType.NORMAL);
+            return true;
+        }
+
+        sendMessage(sender, "Не вдалося відкрити торг " + trader.getKey(), MessageType.WARNING);
         return true;
     }
     
