@@ -1,0 +1,52 @@
+#
+# ░█████╗░███╗░░██╗██╗░░██╗██╗░░░██╗░██████╗██╗░░██╗░█████╗░██████╗░
+# ██╔══██╗████╗░██║██║░░██║╚██╗░██╔╝██╔════╝██║░░██║██╔══██╗██╔══██╗
+# ███████║██╔██╗██║███████║░╚████╔╝░╚█████╗░███████║██║░░██║██████╔╝
+# ██╔══██║██║╚████║██╔══██║░░╚██╔╝░░░╚═══██╗██╔══██║██║░░██║██╔═══╝░
+# ██║░░██║██║░╚███║██║░░██║░░░██║░░░██████╔╝██║░░██║╚█████╔╝██║░░░░░
+# ╚═╝░░╚═╝╚═╝░░╚══╝╚═╝░░╚═╝░░░╚═╝░░░╚═════╝░╚═╝░░╚═╝░╚════╝░╚═╝░░░░░
+#
+# AnhyShop 插件的内部系统消息
+#
+# 1 通用
+shop_err_not_have_permission: "您没有权限使用此命令。"
+shop_err_not_alloved_config: "配置设置中不允许使用此命令。"
+shop_err_command_only_player: "此命令只能由玩家执行。"
+shop_err_command_format: "命令格式："
+#
+# 2 加载配置
+shop_err_folder_is_empty: "文件夹为空或读取时出错。"
+shop_err_folder_is_notexist: "文件夹不存在或不是文件夹。"
+shop_err_reloading_configuration: "重新加载配置时出错。"
+shop_created_default_configuration: "已创建默认配置。"
+shop_configuration_reloaded: "配置已重新加载。"
+shop_language_reloaded: "语言文件和配置已重新加载。"
+#
+# 3 商人操作，创建，删除，重命名
+shop_err_enter_trader_key: "请输入商人的密钥。"
+shop_err_enter_name_trader: "请输入商人的名字。"
+shop_new_trader: "新商人 "
+shop_created_with_key: "已使用密钥创建 "
+shop_err_no_trader_found_key: "未找到具有该密钥的商人。"
+shop_removed_merchant_key: "已移除具有密钥的商人："
+shop_name_trader_with_key: "具有密钥的商人名称"
+shop_name_trader_changed_to: "更改为"
+shop_err_no_traders_found: "未找到商人。"
+shop_trader_key: "密钥："
+shop_trader_name: "名称："
+shop_number_trades: "交易数量："
+#
+# 4 商品操作，添加，删除，替换
+shop_err_no_required_items_slots: "您的库存栏中至少需要有一个交易物品和一个奖励物品。"
+shop_err_trade_already_exists: "该商人已经有一个相同奖励的交易"
+shop_trade_added_trader: "为商人添加了交易"
+shop_no_trades_found_create_new_trade: "未找到具有此奖励的交易。正在创建新交易。"
+shop_trade_is_updated_trader: "商人的交易已更新"
+shop_err_no_found_reward_item: "您的第三个库存栏中需要有一个奖励物品。"
+shop_err_no_rew_trades_found: "未找到具有此奖励的交易。"
+shop_trade_with_reward: "具有奖励的交易"
+shop_removed_from_trader: "从商人处移除"
+shop_err_key_trader_nickname_player: "需要指定商人的密钥和玩家的昵称。"
+shop_err_no_player_found_nickname: "未找到具有此昵称的玩家。"
+shop_trade_open_player: "为玩家开放交易"
+shop_err_not_possible_open_trade: "无法开放交易"

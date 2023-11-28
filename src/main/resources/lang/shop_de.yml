@@ -1,0 +1,52 @@
+#
+# ░█████╗░███╗░░██╗██╗░░██╗██╗░░░██╗░██████╗██╗░░██╗░█████╗░██████╗░
+# ██╔══██╗████╗░██║██║░░██║╚██╗░██╔╝██╔════╝██║░░██║██╔══██╗██╔══██╗
+# ███████║██╔██╗██║███████║░╚████╔╝░╚█████╗░███████║██║░░██║██████╔╝
+# ██╔══██║██║╚████║██╔══██║░░╚██╔╝░░░╚═══██╗██╔══██║██║░░██║██╔═══╝░
+# ██║░░██║██║░╚███║██║░░██║░░░██║░░░██████╔╝██║░░██║╚█████╔╝██║░░░░░
+# ╚═╝░░╚═╝╚═╝░░╚══╝╚═╝░░╚═╝░░░╚═╝░░░╚═════╝░╚═╝░░╚═╝░╚════╝░╚═╝░░░░░
+#
+# Interne Systemnachrichten des AnhyShop-Plugins
+#
+# 1 Allgemein
+shop_err_not_have_permission: "Sie haben keine Berechtigung, diesen Befehl zu verwenden."
+shop_err_not_alloved_config: "Der Befehl ist in den Konfigurationseinstellungen nicht erlaubt."
+shop_err_command_only_player: "Dieser Befehl kann nur von einem Spieler ausgeführt werden."
+shop_err_command_format: "Befehlsformat: "
+#
+# 2 Laden von Konfigurationen
+shop_err_folder_is_empty: "Der Ordner ist leer oder ein Fehler ist beim Lesen aufgetreten."
+shop_err_folder_is_notexist: "Der Ordner existiert nicht oder ist kein Ordner."
+shop_err_reloading_configuration: "Fehler beim Neuladen der Konfiguration."
+shop_created_default_configuration: "Standardkonfiguration erstellt."
+shop_configuration_reloaded: "Konfiguration neu geladen."
+shop_language_reloaded: "Sprachdateien und Konfiguration neu geladen."
+#
+# 3 Arbeit mit Händlern, Erstellen, Löschen, Umbenennen
+shop_err_enter_trader_key: "Geben Sie den Händlerschlüssel an. "
+shop_err_enter_name_trader: "Geben Sie den Namen des Händlers an."
+shop_new_trader: "Neuer Händler "
+shop_created_with_key: "erstellt mit Schlüssel "
+shop_err_no_trader_found_key: "Kein Händler mit solchem Schlüssel gefunden."
+shop_removed_merchant_key: "Händler entfernt mit Schlüssel: "
+shop_name_trader_with_key: "Name des Händlers mit Schlüssel"
+shop_name_trader_changed_to: "geändert zu"
+shop_err_no_traders_found: "Keine Händler gefunden."
+shop_trader_key: "Schlüssel:"
+shop_trader_name: "Name:"
+shop_number_trades: "Anzahl der Handelsgeschäfte:"
+#
+# 4 Arbeit mit Waren, Hinzufügen, Löschen, Ersetzen
+shop_err_no_required_items_slots: "Sie benötigen mindestens einen Handelsgegenstand und einen Belohnungsgegenstand in den Inventarslots."
+shop_err_trade_already_exists: "Dieser Händler hat bereits einen Handel mit derselben Belohnung"
+shop_trade_added_trader: "Handel für Händler hinzugefügt"
+shop_no_trades_found_create_new_trade: "Handel mit solcher Belohnung nicht gefunden. Neuer Handel wird erstellt."
+shop_trade_is_updated_trader: "Handel für Händler aktualisiert"
+shop_err_no_found_reward_item: "Sie benötigen einen Belohnungsgegenstand im dritten Inventarslot."
+shop_err_no_rew_trades_found: "Handel mit solcher Belohnung nicht gefunden."
+shop_trade_with_reward: "Handel mit Belohnung"
+shop_removed_from_trader: "vom Händler entfernt"
+shop_err_key_trader_nickname_player: "Sie müssen den Händlerschlüssel und den Spitznamen des Spielers angeben."
+shop_err_no_player_found_nickname: "Kein Spieler mit solchem Spitznamen gefunden."
+shop_trade_open_player: "Handel für Spieler geöffnet"
+shop_err_not_possible_open_trade: "Handel konnte nicht geöffnet werden"

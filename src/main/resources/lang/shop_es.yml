@@ -1,0 +1,52 @@
+#
+# ░█████╗░███╗░░██╗██╗░░██╗██╗░░░██╗░██████╗██╗░░██╗░█████╗░██████╗░
+# ██╔══██╗████╗░██║██║░░██║╚██╗░██╔╝██╔════╝██║░░██║██╔══██╗██╔══██╗
+# ███████║██╔██╗██║███████║░╚████╔╝░╚█████╗░███████║██║░░██║██████╔╝
+# ██╔══██║██║╚████║██╔══██║░░╚██╔╝░░░╚═══██╗██╔══██║██║░░██║██╔═══╝░
+# ██║░░██║██║░╚███║██║░░██║░░░██║░░░██████╔╝██║░░██║╚█████╔╝██║░░░░░
+# ╚═╝░░╚═╝╚═╝░░╚══╝╚═╝░░╚═╝░░░╚═╝░░░╚═════╝░╚═╝░░╚═╝░╚════╝░╚═╝░░░░░
+#
+# Mensajes del sistema interno del plugin AnhyShop
+#
+# 1 General
+shop_err_not_have_permission: "No tienes permiso para usar este comando."
+shop_err_not_alloved_config: "El comando no está permitido en la configuración."
+shop_err_command_only_player: "Este comando solo puede ser ejecutado por un jugador."
+shop_err_command_format: "Formato del comando: "
+#
+# 2 Cargando configuraciones
+shop_err_folder_is_empty: "La carpeta está vacía o se produjo un error al leerla."
+shop_err_folder_is_notexist: "La carpeta no existe o no es una carpeta."
+shop_err_reloading_configuration: "Error al recargar la configuración."
+shop_created_default_configuration: "Configuración predeterminada creada."
+shop_configuration_reloaded: "Configuración recargada."
+shop_language_reloaded: "Archivos de idioma y configuración recargados."
+#
+# 3 Trabajando con comerciantes, creando, eliminando, renombrando
+shop_err_enter_trader_key: "Especifica la clave del comerciante. "
+shop_err_enter_name_trader: "Especifica el nombre del comerciante."
+shop_new_trader: "Nuevo comerciante "
+shop_created_with_key: "creado con clave "
+shop_err_no_trader_found_key: "No se encontró comerciante con esa clave."
+shop_removed_merchant_key: "Comerciante eliminado con clave: "
+shop_name_trader_with_key: "Nombre del comerciante con clave"
+shop_name_trader_changed_to: "cambiado a"
+shop_err_no_traders_found: "No se encontraron comerciantes."
+shop_trader_key: "Clave:"
+shop_trader_name: "Nombre:"
+shop_number_trades: "Número de transacciones:"
+#
+# 4 Trabajando con productos, agregando, eliminando, reemplazando
+shop_err_no_required_items_slots: "Necesitas tener al menos un artículo de intercambio y un artículo de recompensa en los espacios del inventario."
+shop_err_trade_already_exists: "Este comerciante ya tiene un intercambio con la misma recompensa"
+shop_trade_added_trader: "Intercambio agregado para el comerciante"
+shop_no_trades_found_create_new_trade: "Intercambio con esa recompensa no encontrado. Creando nuevo intercambio."
+shop_trade_is_updated_trader: "Intercambio actualizado para el comerciante"
+shop_err_no_found_reward_item: "Necesitas tener un artículo de recompensa en el tercer espacio del inventario."
+shop_err_no_rew_trades_found: "Intercambio con esa recompensa no encontrado."
+shop_trade_with_reward: "Intercambio con recompensa"
+shop_removed_from_trader: "eliminado del comerciante"
+shop_err_key_trader_nickname_player: "Necesitas especificar la clave del comerciante y el apodo del jugador."
+shop_err_no_player_found_nickname: "No se encontró jugador con ese apodo."
+shop_trade_open_player: "Intercambio abierto para el jugador"
+shop_err_not_possible_open_trade: "No se pudo abrir el intercambio"

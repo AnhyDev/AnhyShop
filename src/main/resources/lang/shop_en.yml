@@ -11,6 +11,7 @@
 # 1 General
 shop_err_not_have_permission: "You do not have permission to use this command."
 shop_err_not_alloved_config: "The command is not allowed in the configuration settings."
+shop_err_command_only_player: "This command can only be executed by a player."
 shop_err_command_format: "Command format: "
 #
 # 2 Loading configurations
@@ -21,3 +22,31 @@ shop_created_default_configuration: "Default configuration created."
 shop_configuration_reloaded: "Configuration reloaded."
 shop_language_reloaded: "Language files and configuration reloaded."
 #
+# 3 Working with merchants, creating, deleting, renaming
+shop_err_enter_trader_key: "Specify the trader key. "
+shop_err_enter_name_trader: "Specify the trader's name."
+shop_new_trader: "New trader "
+shop_created_with_key: "created with key "
+shop_err_no_trader_found_key: "No trader found with such key."
+shop_removed_merchant_key: "Merchant removed with key: "
+shop_name_trader_with_key: "Trader's name with key"
+shop_name_trader_changed_to: "changed to"
+shop_err_no_traders_found: "No traders found."
+shop_trader_key: "Key:"
+shop_trader_name: "Name:"
+shop_number_trades: "Number of trades:"
+#
+# 4 Working with goods, adding, deleting, replacing
+shop_err_no_required_items_slots: "You need to have at least one trade item and a reward item in the inventory slots."
+shop_err_trade_already_exists: "This trader already has a trade with the same reward"
+shop_trade_added_trader: "Trade added for trader"
+shop_no_trades_found_create_new_trade: "Trade with such a reward not found. Creating new trade."
+shop_trade_is_updated_trader: "Trade updated for trader"
+shop_err_no_found_reward_item: "You need to have a reward item in the third inventory slot."
+shop_err_no_rew_trades_found: "Trade with such a reward not found."
+shop_trade_with_reward: "Trade with reward"
+shop_removed_from_trader: "removed from trader"
+shop_err_key_trader_nickname_player: "You need to specify the trader key and player nickname."
+shop_err_no_player_found_nickname: "No player found with such nickname."
+shop_trade_open_player: "Trade opened for player"
+shop_err_not_possible_open_trade: "Failed to open trade"

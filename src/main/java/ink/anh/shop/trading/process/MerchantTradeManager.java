@@ -25,49 +25,6 @@ public class MerchantTradeManager {
         this.traderManager = this.shopPlugin.getTraderManager();
     }
 
-    private boolean isPlayer(CommandSender sender, String permissions) {
-        if (!(sender instanceof Player)) {
-            sendMessage(sender, "Ця команда може виконуватися тільки гравцем.", MessageType.WARNING);
-            return false;
-        } else if (!sender.hasPermission(permissions)) {
-            sendMessage(sender, "shop_err_not_have_permission ", MessageType.WARNING);
-            return false;
-        }
-        return true;
-    }
-
-    private Trader getTrader(CommandSender sender, String traderKey) {
-        Trader trader = traderManager.getTrader(traderKey);
-        if (trader == null) {
-            sendMessage(sender, "Торговець з таким ключем не знайдений.", MessageType.WARNING);
-        }
-        return trader;
-    }
-
-    private ItemStack[] getTradeItems(Player player) {
-        return new ItemStack[] {
-            player.getInventory().getItem(0),
-            player.getInventory().getItem(1),
-            player.getInventory().getItem(2)
-        };
-    }
-
-    private boolean validateTradeItems(CommandSender sender, ItemStack[] tradeItems) {
-        ItemStack i1 = tradeItems[0];
-        ItemStack i2 = tradeItems[1];
-        ItemStack rt = tradeItems[2];
-
-        if ((i1 == null || i1.getType().isAir()) && (i2 == null || i2.getType().isAir()) || rt == null || rt.getType().isAir()) {
-            sendMessage(sender, "Необхідно мати хоча б один предмет для торгівлі та предмет нагороди в слотах інвентаря.", MessageType.WARNING);
-            return false;
-        }
-        return true;
-    }
-
-	private void sendMessage(CommandSender sender, String message, MessageType type) {
-    	Messenger.sendMessage(shopPlugin, sender, message, type);
-    }
-
     public boolean addTrade(CommandSender sender, String[] args) {
         if (!isPlayer(sender, Permissions.TRADE_ADD) || args.length < 2) {
         	return true;
@@ -88,7 +45,7 @@ public class MerchantTradeManager {
         ItemStack rt = tradeItems[2];
         for (Trade existingTrade : trader.getTrades()) {
             if (existingTrade.getRewardItem().isSimilar(rt)) {
-                sendMessage(sender, "У цього торговця вже є торг з такою ж нагородою.", MessageType.WARNING);
+                sendMessage(sender, "shop_err_trade_already_exists ", MessageType.WARNING);
                 return true;
             }
         }
@@ -97,7 +54,7 @@ public class MerchantTradeManager {
         trader.addTrade(newTrade);
         traderManager.addOrUpdateTrader(trader);
 
-        sendMessage(sender, "Торг додано до торговця " + traderKey, MessageType.NORMAL);
+        sendMessage(sender, "shop_trade_added_trader " + traderKey, MessageType.NORMAL);
         return true;
     }
 
@@ -131,13 +88,13 @@ public class MerchantTradeManager {
         }
 
         if (!tradeReplaced) {
-            sendMessage(sender, "Торг з такою нагородою не знайдено. Створення нового торгу.", MessageType.WARNING);
+            sendMessage(sender, "shop_no_trades_found_create_new_trade ", MessageType.WARNING);
             Trade newTrade = new Trade(tradeItems[0], tradeItems[1], rt);
             trader.addTrade(newTrade);
         }
 
         traderManager.addOrUpdateTrader(trader);
-        sendMessage(sender, "Торг оновлено для торговця " + traderKey, MessageType.NORMAL);
+        sendMessage(sender, "shop_trade_is_updated_trader " + traderKey, MessageType.NORMAL);
         return true;
     }
 
@@ -155,7 +112,7 @@ public class MerchantTradeManager {
         Player player = (Player) sender;
         ItemStack rt = player.getInventory().getItem(2);
         if (rt == null || rt.getType().isAir()) {
-            sendMessage(sender, "Необхідно мати предмет нагороди в третьому слоті інвентаря.", MessageType.WARNING);
+            sendMessage(sender, "shop_err_no_found_reward_item ", MessageType.WARNING);
             return true;
         }
 
@@ -169,18 +126,18 @@ public class MerchantTradeManager {
         }
 
         if (!tradeRemoved) {
-            sendMessage(sender, "Торг з такою нагородою не знайдено.", MessageType.WARNING);
+            sendMessage(sender, "shop_err_no_rew_trades_found ", MessageType.WARNING);
             return true;
         }
 
         traderManager.addOrUpdateTrader(trader);
-        sendMessage(sender, "Торг з нагородою " + rt.getType().toString() + " видалено у торговця " + traderKey, MessageType.ESPECIALLY);
+        sendMessage(sender, "shop_trade_with_reward " + rt.getType().toString() + " shop_removed_from_trader " + traderKey, MessageType.ESPECIALLY);
         return true;
     }
 
     public boolean openTradeForPlayer(CommandSender sender, String[] args) {
         if (args.length < 3) {
-            sendMessage(sender, "Необхідно вказати ключ торговця та нікнейм гравця.", MessageType.WARNING);
+            sendMessage(sender, "shop_err_key_trader_nickname_player ", MessageType.WARNING);
             return true;
         }
 
@@ -199,17 +156,17 @@ public class MerchantTradeManager {
         String playerName = args[2];
         Player player = shopPlugin.getServer().getPlayer(playerName);
         if (player == null) {
-            sendMessage(sender, "Гравець з таким нікнеймом не знайдений.", MessageType.WARNING);
+            sendMessage(sender, "shop_err_no_player_found_nickname ", MessageType.WARNING);
             return true;
         }
 
         // Відкриття торгів для гравця
         if (VirtualVillager.openTrading(player, trader)) {
-            sendMessage(sender, "Торги відкрито для гравця " + playerName, MessageType.NORMAL);
+            sendMessage(sender, "shop_trade_open_player " + playerName, MessageType.NORMAL);
             return true;
         }
 
-        sendMessage(sender, "Не вдалося відкрити торг " + trader.getKey(), MessageType.WARNING);
+        sendMessage(sender, "shop_err_not_possible_open_trade " + trader.getKey(), MessageType.WARNING);
         return true;
     }
     
@@ -227,7 +184,7 @@ public class MerchantTradeManager {
 
         trader.setName(newName);
         traderManager.addOrUpdateTrader(trader);
-        sendMessage(sender, "Ім'я торговця з ключем " + traderKey + " змінено на " + newName, MessageType.NORMAL);
+        sendMessage(sender, "shop_name_trader_with_key" + traderKey + " shop_name_trader_changed_to " + newName, MessageType.NORMAL);
         return true;
     }
 
@@ -240,15 +197,58 @@ public class MerchantTradeManager {
         
         List<Trader> traders = traderManager.getAllTraders();
         if (traders.isEmpty()) {
-            sendMessage(sender, "Торговців не знайдено.", MessageType.WARNING);
+            sendMessage(sender, "shop_err_no_traders_found ", MessageType.WARNING);
             return true;
         }
 
         for (Trader trader : traders) {
-            String message = String.format("Ключ: %s, Ім'я: %s, Кількість торгів: %d",
+            String message = String.format("shop_trader_key %s, shop_trader_name %s, shop_number_trades %d",
                                           trader.getKey(), trader.getName(), trader.getTrades().size());
             sendMessage(sender, message, MessageType.NORMAL);
         }
         return true;
+    }
+
+    private boolean isPlayer(CommandSender sender, String permissions) {
+        if (!(sender instanceof Player)) {
+            sendMessage(sender, "shop_err_command_only_player ", MessageType.WARNING);
+            return false;
+        } else if (!sender.hasPermission(permissions)) {
+            sendMessage(sender, "shop_err_not_have_permission ", MessageType.WARNING);
+            return false;
+        }
+        return true;
+    }
+
+    private Trader getTrader(CommandSender sender, String traderKey) {
+        Trader trader = traderManager.getTrader(traderKey);
+        if (trader == null) {
+            sendMessage(sender, "shop_err_no_trader_found_key ", MessageType.WARNING);
+        }
+        return trader;
+    }
+
+    private ItemStack[] getTradeItems(Player player) {
+        return new ItemStack[] {
+            player.getInventory().getItem(0),
+            player.getInventory().getItem(1),
+            player.getInventory().getItem(2)
+        };
+    }
+
+    private boolean validateTradeItems(CommandSender sender, ItemStack[] tradeItems) {
+        ItemStack i1 = tradeItems[0];
+        ItemStack i2 = tradeItems[1];
+        ItemStack rt = tradeItems[2];
+
+        if ((i1 == null || i1.getType().isAir()) && (i2 == null || i2.getType().isAir()) || rt == null || rt.getType().isAir()) {
+            sendMessage(sender, "shop_err_no_required_items_slots ", MessageType.WARNING);
+            return false;
+        }
+        return true;
+    }
+
+	private void sendMessage(CommandSender sender, String message, MessageType type) {
+    	Messenger.sendMessage(shopPlugin, sender, message, type);
     }
 }

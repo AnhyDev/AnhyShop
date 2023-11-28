@@ -1,0 +1,52 @@
+#
+# ░█████╗░███╗░░██╗██╗░░██╗██╗░░░██╗░██████╗██╗░░██╗░█████╗░██████╗░
+# ██╔══██╗████╗░██║██║░░██║╚██╗░██╔╝██╔════╝██║░░██║██╔══██╗██╔══██╗
+# ███████║██╔██╗██║███████║░╚████╔╝░╚█████╗░███████║██║░░██║██████╔╝
+# ██╔══██║██║╚████║██╔══██║░░╚██╔╝░░░╚═══██╗██╔══██║██║░░██║██╔═══╝░
+# ██║░░██║██║░╚███║██║░░██║░░░██║░░░██████╔╝██║░░██║╚█████╔╝██║░░░░░
+# ╚═╝░░╚═╝╚═╝░░╚══╝╚═╝░░╚═╝░░░╚═╝░░░╚═════╝░╚═╝░░╚═╝░╚════╝░╚═╝░░░░░
+#
+# Messaggi di sistema interni del plugin AnhyShop
+#
+# 1 Generale
+shop_err_not_have_permission: "Non hai il permesso di usare questo comando."
+shop_err_not_alloved_config: "Il comando non è permesso nelle impostazioni di configurazione."
+shop_err_command_only_player: "Questo comando può essere eseguito solo da un giocatore."
+shop_err_command_format: "Formato del comando: "
+#
+# 2 Caricamento configurazioni
+shop_err_folder_is_empty: "La cartella è vuota o si è verificato un errore durante la lettura."
+shop_err_folder_is_notexist: "La cartella non esiste o non è una cartella."
+shop_err_reloading_configuration: "Errore nel ricaricare la configurazione."
+shop_created_default_configuration: "Configurazione predefinita creata."
+shop_configuration_reloaded: "Configurazione ricaricata."
+shop_language_reloaded: "File di lingua e configurazione ricaricati."
+#
+# 3 Lavoro con i commercianti, creazione, eliminazione, rinominazione
+shop_err_enter_trader_key: "Specifica la chiave del commerciante. "
+shop_err_enter_name_trader: "Specifica il nome del commerciante."
+shop_new_trader: "Nuovo commerciante "
+shop_created_with_key: "creato con chiave "
+shop_err_no_trader_found_key: "Nessun commerciante trovato con tale chiave."
+shop_removed_merchant_key: "Commerciante rimosso con chiave: "
+shop_name_trader_with_key: "Nome del commerciante con chiave"
+shop_name_trader_changed_to: "cambiato in"
+shop_err_no_traders_found: "Nessun commerciante trovato."
+shop_trader_key: "Chiave:"
+shop_trader_name: "Nome:"
+shop_number_trades: "Numero di commerci:"
+#
+# 4 Lavoro con i beni, aggiunta, eliminazione, sostituzione
+shop_err_no_required_items_slots: "È necessario avere almeno un oggetto di scambio e un oggetto premio negli slot dell'inventario."
+shop_err_trade_already_exists: "Questo commerciante ha già uno scambio con la stessa ricompensa"
+shop_trade_added_trader: "Scambio aggiunto per il commerciante"
+shop_no_trades_found_create_new_trade: "Scambio con tale ricompensa non trovato. Creazione di un nuovo scambio."
+shop_trade_is_updated_trader: "Scambio aggiornato per il commerciante"
+shop_err_no_found_reward_item: "È necessario avere un oggetto premio nel terzo slot dell'inventario."
+shop_err_no_rew_trades_found: "Scambio con tale ricompensa non trovato."
+shop_trade_with_reward: "Scambio con ricompensa"
+shop_removed_from_trader: "rimosso dal commerciante"
+shop_err_key_trader_nickname_player: "È necessario specificare la chiave del commerciante e il nickname del giocatore."
+shop_err_no_player_found_nickname: "Nessun giocatore trovato con tale nickname."
+shop_trade_open_player: "Scambio aperto per il giocatore"
+shop_err_not_possible_open_trade: "Impossibile aprire lo scambio"

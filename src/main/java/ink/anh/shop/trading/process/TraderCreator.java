@@ -30,7 +30,7 @@ public class TraderCreator {
         }
         
         if (args.length < 2) {
-            sender.sendMessage("Вкажіть ім'я торговця.");
+            sender.sendMessage("shop_err_enter_name_trader ");
             return true;
         }
 
@@ -43,7 +43,7 @@ public class TraderCreator {
 
         Trader newTrader = new Trader(key, traderName, new ArrayList<>());
         traderManager.addOrUpdateTrader(newTrader);
-        sender.sendMessage("Новий торговець " + traderName + " створений з ключем " + key);
+        sender.sendMessage("shop_new_trader " + traderName + " shop_created_with_key " + key);
         return true;
     }
 
@@ -55,18 +55,18 @@ public class TraderCreator {
         }
         
         if (args.length < 2) {
-            sender.sendMessage("Вкажіть ключ торговця.");
+            sender.sendMessage("shop_err_enter_trader_key ");
             return true;
         }
 
         String key = args[1];
         if (traderManager.getTrader(key) == null) {
-            sender.sendMessage("Торговець з таким ключем не знайдений.");
+            sender.sendMessage("shop_err_no_trader_found_key ");
             return true;
         }
 
         traderManager.removeTrader(key);
-        sender.sendMessage("Торговець з ключем " + key + " видалений.");
+        sender.sendMessage("shop_removed_merchant_key " + key);
         return true;
     }
 

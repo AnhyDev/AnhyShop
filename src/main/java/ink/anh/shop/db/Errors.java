@@ -3,15 +3,15 @@ package ink.anh.shop.db;
 public class Errors {
 
     public static String sqlConnectionExecute(){
-        return "Не удалось выполнить запрос MySQL: ";
+        return "MySQL query failed: ";
     }
     public static String sqlConnectionClose(){
-        return "Не удалось закрыть соединение MySQL: ";
+        return "Failed to close MySQL connection: ";
     }
     public static String noSQLConnection(){
-        return "Не удалось получить соединение MYSQL: ";
+        return "Failed to get MYSQL connection: ";
     }
     public static String noTableFound(){
-        return "Ошибка базы данных: таблица не найдено";
+        return "Database Error: Table not found";
     }
 }
