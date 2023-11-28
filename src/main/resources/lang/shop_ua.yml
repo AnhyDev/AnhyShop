@@ -9,15 +9,15 @@
 # Внутрішні системні повідомлення плагіну AnhyShop
 #
 # 1 Загальне
-lingo_err_not_have_permission: "Ви не маєте дозволу на використання цієї команди."
-lingo_err_not_alloved_config: "Команда не дозволена в налаштуваннях конфігурації."
-lingo_err_command_format: "Формат команди: "
+shop_err_not_have_permission: "Ви не маєте дозволу на використання цієї команди."
+shop_err_not_alloved_config: "Команда не дозволена в налаштуваннях конфігурації."
+shop_err_command_format: "Формат команди: "
 #
 # 2 Завантаження конфігурацій
-lingo_err_folder_is_empty: "Папка порожня або сталася помилка при її читанні."
-lingo_err_folder_is_notexist: "Папка не існує або це не папка."
-lingo_err_reloading_configuration: "Помилка перезавантаження конфігурації."
-lingo_created_default_configuration: "Створена конфігурація за замовчуванням."
-lingo_configuration_reloaded: "Конфігурацію перезавантажено."
-lingo_language_reloaded: "Мовні файли та конфігурацію перезавантажено."
+shop_err_folder_is_empty: "Папка порожня або сталася помилка при її читанні."
+shop_err_folder_is_notexist: "Папка не існує або це не папка."
+shop_err_reloading_configuration: "Помилка перезавантаження конфігурації."
+shop_created_default_configuration: "Створена конфігурація за замовчуванням."
+shop_configuration_reloaded: "Конфігурацію перезавантажено."
+shop_language_reloaded: "Мовні файли та конфігурацію перезавантажено."
 #

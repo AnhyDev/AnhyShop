@@ -8,6 +8,7 @@ import ink.anh.lingo.api.lang.LanguageManager;
 import ink.anh.shop.command.CommandShop;
 import ink.anh.shop.db.SQLite;
 import ink.anh.shop.lang.LangMessage;
+import ink.anh.shop.trading.process.TraderManager;
 
 public class AnhyShop extends JavaPlugin {
 
@@ -15,10 +16,13 @@ public class AnhyShop extends JavaPlugin {
 	private ConfigurationManager configurationManager;
 	private LanguageManager languageManager;
 	private SQLite sqlite;
+	private TraderManager traderManager;
 
     @Override
     public void onLoad() {
     	instance = this;
+		sqlite = new SQLite(this);
+		sqlite.load();
     }
 
     @Override
@@ -27,8 +31,8 @@ public class AnhyShop extends JavaPlugin {
     	configurationManager = new ConfigurationManager(this);
     	languageManager = LangMessage.getInstance(this);
         this.getCommand("shop").setExecutor(new CommandShop(this));
-		sqlite = new SQLite(this);
-		sqlite.load();
+
+	    traderManager = TraderManager.getInstance(this);
     }
 
     @Override
@@ -61,5 +65,9 @@ public class AnhyShop extends JavaPlugin {
 
 	public LanguageManager getLanguageManager() {
 		return languageManager;
+	}
+
+	public TraderManager getTraderManager() {
+		return traderManager;
 	}
 }

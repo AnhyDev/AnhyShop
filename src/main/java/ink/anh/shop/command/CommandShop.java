@@ -12,7 +12,8 @@ import ink.anh.lingo.messages.Messenger;
 import ink.anh.lingo.utils.LangUtils;
 import ink.anh.shop.AnhyShop;
 import ink.anh.shop.Permissions;
-import ink.anh.shop.traders.TradesManager;
+import ink.anh.shop.trading.process.MerchantTradeManager;
+import ink.anh.shop.trading.process.TraderCreator;
 
 public class CommandShop implements CommandExecutor {
 	
@@ -27,60 +28,28 @@ public class CommandShop implements CommandExecutor {
         if (args.length > 0) {
 
             switch (args[0].toLowerCase()) {
+            case "newt":
+            	return new TraderCreator(shopPlugin).createTrader(sender, args);
+            case "delt":
+            	return new TraderCreator(shopPlugin).deleteTrader(sender, args);
+            case "add":
+            	return new MerchantTradeManager(shopPlugin).addTrade(sender, args);
+            case "remove":
+            	return new MerchantTradeManager(shopPlugin).removeTrade(sender, args);
+            case "replace":
+                return new MerchantTradeManager(shopPlugin).replaceTrade(sender, args);
+            case "rename":
+                return new MerchantTradeManager(shopPlugin).changeTraderName(sender, args);
+            case "list":
+                return new MerchantTradeManager(shopPlugin).listTraders(sender);
+            case "trade":
+            	return new MerchantTradeManager(shopPlugin).openTradeForPlayer(sender, args);
             case "reload":
                 return reload(sender);
-            case "add":
-                return addTrade(sender, args);
-            case "remove":
-                return removeTrade(sender, args);
-            case "replace":
-                return replaceTrade(sender, args);
-            case "deltrader":
-                return deleteTrader(sender, args);
-            case "trade":
-                return trade(sender, args);
             default:
                 return false;
             }
         }
-		return false;
-	}
-	
-	private boolean replaceTrade(CommandSender sender, String[] args) {
-		if (sender instanceof Player) {
-			TradesManager.replaceTradeIngr(sender, args);
-			sendMessage(sender, "PVE rating: " + args[1] + " + " + args[2], MessageType.ERROR);
-		}
-		return true;
-	}
-	
-	private boolean trade(CommandSender sender, String[] args) {
-		if (sender instanceof Player) {
-			TradesManager trade = new TradesManager(shopPlugin);
-			trade.onMarketCMD(sender, args);
-			return true;
-		}
-		return false;
-	}
-	
-	private boolean deleteTrader(CommandSender sender, String[] args) {
-		if (sender instanceof Player) {
-			return TradesManager.rmTradesman(sender, args);
-		}
-		return false;
-	}
-
-	private boolean removeTrade(CommandSender sender, String[] args) {
-		if (sender instanceof Player) {
-			return TradesManager.rmTrade(sender, args);
-		}
-		return false;
-	}
-
-	private boolean addTrade(CommandSender sender, String[] args) {
-		if (sender instanceof Player) {
-			return TradesManager.addTrade(sender, args);
-		}
 		return false;
 	}
 
@@ -91,7 +60,7 @@ public class CommandShop implements CommandExecutor {
 	    }
 	    
         if (shopPlugin.getConfigurationManager().reload()) {
-            sendMessage(sender, Translator.translateKyeWorld("lingo_language_reloaded ", langs, shopPlugin.getLanguageManager()), MessageType.NORMAL);
+            sendMessage(sender, Translator.translateKyeWorld("shop_language_reloaded ", langs, shopPlugin.getLanguageManager()), MessageType.NORMAL);
             return true;
         }
         return false;
@@ -116,7 +85,7 @@ public class CommandShop implements CommandExecutor {
 
             // Перевіряємо наявність дозволу у гравця
             if (!player.hasPermission(permission)) {
-                sendMessage(sender, Translator.translateKyeWorld("lingo_err_not_have_permission ", langs, shopPlugin.getLanguageManager()), MessageType.ERROR);
+                sendMessage(sender, Translator.translateKyeWorld("shop_err_not_have_permission ", langs, shopPlugin.getLanguageManager()), MessageType.ERROR);
                 return langs;
             }
         }

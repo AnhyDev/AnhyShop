@@ -12,36 +12,37 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import ink.anh.shop.AnhyShop;
-import ink.anh.shop.traders.Trade;
-import ink.anh.shop.traders.Tradesman;
+import ink.anh.shop.trading.Trade;
+import ink.anh.shop.trading.Trader;
 
-public class MyTradeSQLite extends SQLite {
+public class SQLiteTraders extends SQLite {
 
-    public MyTradeSQLite(AnhyShop instance) {
+    public SQLiteTraders(AnhyShop instance) {
         super(instance);
     }
 
-    public void delete(Tradesman trm) {
-        String sql = "DELETE FROM AnhyShop_trades WHERE name = ?";
+    public void delete(Trader trader) {
+        String sql = "DELETE FROM shop WHERE key = ?";
         try (Connection conn = getSQLConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, trm.getName());
+            pstmt.setString(1, trader.getKey());
             pstmt.executeUpdate();
-            shopPlugin.getServer().getLogger().info("из БД удален: " + trm.getName());
+            shopPlugin.getServer().getLogger().info("shop_removed_from_database: " + trader.getName() + ", key: " + trader.getKey());
 
         } catch (SQLException ex) {
             shopPlugin.getLogger().log(Level.SEVERE, "Error executing SQL query", ex);
         }
     }
 
-    public List<Tradesman> getTradesmansDB() {
-        List<Tradesman> trmans = new ArrayList<>();
+    public List<Trader> getTradesmansDB() {
+        List<Trader> trmans = new ArrayList<>();
         try (Connection conn = getSQLConnection();
              PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + shop + ";")) {
             if (ps == null) return null;
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Tradesman trm = new Tradesman(
+                Trader trm = new Trader(
+                        rs.getString("key"),
                         rs.getString("name"),
                         getTrades(rs.getString("trades")));
                 trmans.add(trm);
@@ -52,15 +53,13 @@ public class MyTradeSQLite extends SQLite {
         return trmans;
     }
 
-    public void setTradesmanDB(Tradesman trm) {
+    public void setTradesmanDB(Trader trader) {
         try (Connection conn = getSQLConnection();
              PreparedStatement ps = conn.prepareStatement("INSERT OR REPLACE INTO " + shop
-                     + " (name,trades,col01,col02,col03) VALUES(?,?,?,?,?)")) {
-            ps.setString(1, trm.getName());
-            ps.setString(2, setTrades(trm.getTrades()));
-            ps.setString(3, null);
-            ps.setString(4, null);
-            ps.setInt(5, 0);
+                     + " (key,name,trades) VALUES(?,?,?)")) {
+            ps.setString(1, trader.getKey());
+            ps.setString(2, trader.getName());
+            ps.setString(3, setTrades(trader.getTrades()));
             ps.executeUpdate();
         } catch (SQLException ex) {
             shopPlugin.getLogger().log(Level.SEVERE, "Error executing SQL query", ex);

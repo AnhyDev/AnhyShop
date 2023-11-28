@@ -1,4 +1,4 @@
-package ink.anh.shop.traders;
+package ink.anh.shop.trading;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;

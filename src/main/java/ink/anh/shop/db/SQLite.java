@@ -50,11 +50,9 @@ public class SQLite extends Database{
             Statement s = connection.createStatement();
 
             s.executeUpdate("CREATE TABLE IF NOT EXISTS shop ("
-/* 1*/            	+ "`name` TEXT NOT NULL UNIQUE,"
-/* 2*/            	+ "`trades` TEXT,"
-/* 3*/            	+ "`col01` TEXT,"
-/* 4*/            	+ "`col02` TEXT,"
-/* 5*/            	+ "`col03` INTEGER, PRIMARY KEY (`name`));");
+/* 1*/            	+ "`key` TEXT NOT NULL UNIQUE,"
+/* 2*/            	+ "`name` TEXT,"
+/* 3*/            	+ "`trades` TEXT, PRIMARY KEY (`key`));");
 
             s.close();
             s.close();

@@ -29,7 +29,7 @@ public abstract class Database {
     public void initialize(){
         connection = getSQLConnection();
         try{
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM " + shop + " WHERE name = ?");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM " + shop + " WHERE key = ?");
             ps.setString(1, "");
             ResultSet rs = ps.executeQuery();
             close(ps,rs);
