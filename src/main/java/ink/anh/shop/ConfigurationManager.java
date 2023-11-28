@@ -2,9 +2,13 @@ package ink.anh.shop;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import ink.anh.lingo.AnhyLingo;
+import ink.anh.lingo.api.Translator;
 import ink.anh.lingo.messages.Logger;
 import net.md_5.bungee.api.ChatColor;
 
@@ -15,7 +19,6 @@ public class ConfigurationManager {
     private File configFile;
     
     private String defaultLang = "en";
-    private boolean debug;
 
     ConfigurationManager(AnhyShop plugin) {
         this.shopPlugin = plugin;
@@ -27,9 +30,8 @@ public class ConfigurationManager {
     void saveDefaultConfiguration() {
         if (!configFile.exists()) {
             YamlConfiguration defaultConfig = new YamlConfiguration();
-            defaultConfig.set("language", "en");
+            defaultConfig.options().setHeader(logo());
             defaultConfig.set("plugin_name", "AnhyShop");
-            defaultConfig.set("debug", false);
             try {
                 defaultConfig.save(configFile);
                 Logger.warn(shopPlugin, "Default configuration created. ");
@@ -40,25 +42,40 @@ public class ConfigurationManager {
     }
     
     private void setDataConfig() {
-        defaultLang = shopPlugin.getConfig().getString("language", "en");
+        defaultLang = AnhyLingo.getInstance() != null ? AnhyLingo.getInstance().getConfigurationManager().getDefaultLang() : "en";
         pluginName = ChatColor.translateAlternateColorCodes('&',shopPlugin.getConfig().getString("plugin_name", "AnhyShop"));
-        debug = shopPlugin.getConfig().getBoolean("debug", false);
     }
 
 	public boolean reload() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+        try {
+            this.shopPlugin.reloadConfig();
+            setDataConfig();
+            shopPlugin.getLanguageManager().reloadLanguages();
+            shopPlugin.getTraderManager().reloadTraders();
+            Logger.info(shopPlugin, Translator.translateKyeWorld("shop_configuration_reloaded" , new String[] {defaultLang}, shopPlugin.getLanguageManager()));
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            Logger.error(shopPlugin, Translator.translateKyeWorld("shop_err_reloading_configuration ", new String[] {defaultLang}, shopPlugin.getLanguageManager()));
+            return false;
+        }
+    }
 
 	public String getPluginName() {
 		return pluginName;
-	}
+	}    public static List<String> logo() {
+        List<String> asciiArt = new ArrayList<>();
 
-	public String getDefaultLang() {
-		return defaultLang;
-	}
+        asciiArt.add("");
+        asciiArt.add(" ░█████╗░███╗░░██╗██╗░░██╗██╗░░░██╗░██████╗██╗░░██╗░█████╗░██████╗░");
+        asciiArt.add(" ██╔══██╗████╗░██║██║░░██║╚██╗░██╔╝██╔════╝██║░░██║██╔══██╗██╔══██╗");
+        asciiArt.add(" ███████║██╔██╗██║███████║░╚████╔╝░╚█████╗░███████║██║░░██║██████╔╝");
+        asciiArt.add(" ██╔══██║██║╚████║██╔══██║░░╚██╔╝░░░╚═══██╗██╔══██║██║░░██║██╔═══╝░");
+        asciiArt.add(" ██║░░██║██║░╚███║██║░░██║░░░██║░░░██████╔╝██║░░██║╚█████╔╝██║░░░░░");
+        asciiArt.add(" ╚═╝░░╚═╝╚═╝░░╚══╝╚═╝░░╚═╝░░░╚═╝░░░╚═════╝░╚═╝░░╚═╝░╚════╝░╚═╝░░░░░");
+        asciiArt.add("");
 
-	public boolean isDebug() {
-		return debug;
-	}
+        return asciiArt;
+    }
+
 }
