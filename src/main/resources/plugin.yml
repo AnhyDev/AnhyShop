@@ -9,4 +9,4 @@ softdepend: [AnhyLingo]
 commands:
     shop:
         aliases: [anhyshop]
-        usage: "The command '/shop (/anhyshop)' execution error, please check the arguments' correctness."
+        usage: "[AnhyShop] The command '/shop (/anhyshop)' execution error, please check the arguments' correctness."
