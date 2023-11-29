@@ -12,7 +12,7 @@ import ink.anh.lingo.api.Translator;
 import ink.anh.lingo.lang.TranslateItemStack;
 import ink.anh.lingo.utils.LangUtils;
 import ink.anh.shop.AnhyShop;
-import ink.anh.shop.utils.ServerUtils;
+import ink.anh.shop.utils.OtherUtils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -51,7 +51,7 @@ public class VirtualVillager {
     }
     
     private static List<Trade> translateTrade(String[] langs, List<Trade> trades) {
-        String version = ServerUtils.getServerVersion();
+        String version = OtherUtils.getServerVersion();
         Class<?> craftItemStackClass;
         Method asCraftCopyMethod;
         try {

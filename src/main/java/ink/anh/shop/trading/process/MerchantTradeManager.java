@@ -7,6 +7,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import ink.anh.lingo.api.Translator;
+import ink.anh.lingo.api.lang.LanguageManager;
 import ink.anh.lingo.messages.MessageType;
 import ink.anh.lingo.messages.Messenger;
 import ink.anh.shop.AnhyShop;
@@ -14,19 +16,28 @@ import ink.anh.shop.Permissions;
 import ink.anh.shop.trading.Trade;
 import ink.anh.shop.trading.Trader;
 import ink.anh.shop.trading.VirtualVillager;
+import ink.anh.shop.utils.OtherUtils;
 
 public class MerchantTradeManager {
 
     private TraderManager traderManager;
     private AnhyShop shopPlugin;
+    private LanguageManager languageManager;
 
     public MerchantTradeManager(AnhyShop shopPlugin) {
         this.shopPlugin = shopPlugin;
         this.traderManager = this.shopPlugin.getTraderManager();
+        this.languageManager = this.shopPlugin.getLanguageManager();
     }
 
     public boolean addTrade(CommandSender sender, String[] args) {
-        if (!isPlayer(sender, Permissions.TRADE_ADD) || args.length < 2) {
+    	
+    	String[] langs = OtherUtils.checkPlayerPermissions(sender, Permissions.TRADE_ADD);
+	    if (langs != null && langs[0] == null) {
+            return true;
+	    }
+	    
+        if (!isPlayer(sender) || args.length < 2) {
         	return true;
         }
 
@@ -45,7 +56,7 @@ public class MerchantTradeManager {
         ItemStack rt = tradeItems[2];
         for (Trade existingTrade : trader.getTrades()) {
             if (existingTrade.getRewardItem().isSimilar(rt)) {
-                sendMessage(sender, "shop_err_trade_already_exists ", MessageType.WARNING);
+                sendMessage(sender, translate("shop_err_trade_already_exists ", langs), MessageType.WARNING);
                 return true;
             }
         }
@@ -54,12 +65,18 @@ public class MerchantTradeManager {
         trader.addTrade(newTrade);
         traderManager.addOrUpdateTrader(trader);
 
-        sendMessage(sender, "shop_trade_added_trader " + traderKey, MessageType.NORMAL);
+        sendMessage(sender, translate("shop_trade_added_trader ", langs) + traderKey, MessageType.NORMAL);
         return true;
     }
 
     public boolean replaceTrade(CommandSender sender, String[] args) {
-        if (!isPlayer(sender, Permissions.TRADE_REPLACE) || args.length < 2) {
+    	
+    	String[] langs = OtherUtils.checkPlayerPermissions(sender, Permissions.TRADE_REPLACE);
+	    if (langs != null && langs[0] == null) {
+            return true;
+	    }
+	    
+        if (!isPlayer(sender) || args.length < 2) {
         	return true;
         }
 
@@ -88,18 +105,24 @@ public class MerchantTradeManager {
         }
 
         if (!tradeReplaced) {
-            sendMessage(sender, "shop_no_trades_found_create_new_trade ", MessageType.WARNING);
+            sendMessage(sender, translate("shop_no_trades_found_create_new_trade ", langs), MessageType.WARNING);
             Trade newTrade = new Trade(tradeItems[0], tradeItems[1], rt);
             trader.addTrade(newTrade);
         }
 
         traderManager.addOrUpdateTrader(trader);
-        sendMessage(sender, "shop_trade_is_updated_trader " + traderKey, MessageType.NORMAL);
+        sendMessage(sender, translate("shop_trade_is_updated_trader ", langs) + traderKey, MessageType.NORMAL);
         return true;
     }
 
     public boolean removeTrade(CommandSender sender, String[] args) {
-        if (!isPlayer(sender, Permissions.TRADE_REMOVE) || args.length < 2) {
+    	
+    	String[] langs = OtherUtils.checkPlayerPermissions(sender, Permissions.TRADE_REMOVE);
+	    if (langs != null && langs[0] == null) {
+            return true;
+	    }
+	    
+        if (!isPlayer(sender) || args.length < 2) {
             return true;
         }
 
@@ -112,7 +135,7 @@ public class MerchantTradeManager {
         Player player = (Player) sender;
         ItemStack rt = player.getInventory().getItem(2);
         if (rt == null || rt.getType().isAir()) {
-            sendMessage(sender, "shop_err_no_found_reward_item ", MessageType.WARNING);
+            sendMessage(sender, translate("shop_err_no_found_reward_item ", langs), MessageType.WARNING);
             return true;
         }
 
@@ -126,24 +149,25 @@ public class MerchantTradeManager {
         }
 
         if (!tradeRemoved) {
-            sendMessage(sender, "shop_err_no_rew_trades_found ", MessageType.WARNING);
+            sendMessage(sender, translate("shop_err_no_rew_trades_found ", langs), MessageType.WARNING);
             return true;
         }
 
         traderManager.addOrUpdateTrader(trader);
-        sendMessage(sender, "shop_trade_with_reward " + rt.getType().toString() + " shop_removed_from_trader " + traderKey, MessageType.ESPECIALLY);
+        sendMessage(sender, translate("shop_trade_with_reward ", langs) + rt.getType().toString() + 
+        						translate(" shop_removed_from_trader ", langs) + traderKey, MessageType.ESPECIALLY);
         return true;
     }
 
     public boolean openTradeForPlayer(CommandSender sender, String[] args) {
-        if (args.length < 3) {
-            sendMessage(sender, "shop_err_key_trader_nickname_player ", MessageType.WARNING);
+    	
+    	String[] langs = OtherUtils.checkPlayerPermissions(sender, Permissions.TRADE_OPEN);
+	    if (langs != null && langs[0] == null) {
             return true;
-        }
-
-        // Перевірка дозволів виконується тільки для гравців, а не для консолі
-        if (sender instanceof Player && !sender.hasPermission(Permissions.TRADE_OPEN)) {
-            sendMessage(sender, "shop_err_not_have_permission ", MessageType.WARNING);
+	    }
+	    
+        if (args.length < 3) {
+            sendMessage(sender, translate("shop_err_key_trader_nickname_player ", langs), MessageType.WARNING);
             return true;
         }
 
@@ -156,22 +180,28 @@ public class MerchantTradeManager {
         String playerName = args[2];
         Player player = shopPlugin.getServer().getPlayer(playerName);
         if (player == null) {
-            sendMessage(sender, "shop_err_no_player_found_nickname ", MessageType.WARNING);
+            sendMessage(sender, translate("shop_err_no_player_found_nickname ", langs), MessageType.WARNING);
             return true;
         }
 
         // Відкриття торгів для гравця
         if (VirtualVillager.openTrading(player, trader)) {
-            sendMessage(sender, "shop_trade_open_player " + playerName, MessageType.NORMAL);
+            sendMessage(sender, translate("shop_trade_open_player ", langs) + playerName, MessageType.NORMAL);
             return true;
         }
 
-        sendMessage(sender, "shop_err_not_possible_open_trade " + trader.getKey(), MessageType.WARNING);
+        sendMessage(sender, translate("shop_err_not_possible_open_trade ", langs) + trader.getKey(), MessageType.WARNING);
         return true;
     }
     
     public boolean changeTraderName(CommandSender sender, String[] args) {
-        if (!isPlayer(sender, Permissions.TRADE_CHANGE_NAME) || args.length < 3) {
+    	
+    	String[] langs = OtherUtils.checkPlayerPermissions(sender, Permissions.TRADE_CHANGE_NAME);
+	    if (langs != null && langs[0] == null) {
+            return true;
+	    }
+	    
+        if (args.length < 3) {
         	return true;
         }
 
@@ -184,37 +214,37 @@ public class MerchantTradeManager {
 
         trader.setName(newName);
         traderManager.addOrUpdateTrader(trader);
-        sendMessage(sender, "shop_name_trader_with_key" + traderKey + " shop_name_trader_changed_to " + newName, MessageType.NORMAL);
+        sendMessage(sender, translate("shop_name_trader_with_key ", langs) + traderKey + 
+        						translate(" shop_name_trader_changed_to ", langs) + newName, MessageType.NORMAL);
         return true;
     }
 
     public boolean listTraders(CommandSender sender) {
     	
-        if (sender instanceof Player && !sender.hasPermission(Permissions.TRADE_VIEW)) {
-            sendMessage(sender, "shop_err_not_have_permission ", MessageType.WARNING);
+    	String[] langs = OtherUtils.checkPlayerPermissions(sender, Permissions.TRADE_VIEW);
+	    if (langs != null && langs[0] == null) {
             return true;
-        }
+	    }
         
         List<Trader> traders = traderManager.getAllTraders();
         if (traders.isEmpty()) {
-            sendMessage(sender, "shop_err_no_traders_found ", MessageType.WARNING);
+            sendMessage(sender, translate("shop_err_no_traders_found ", langs), MessageType.WARNING);
             return true;
         }
 
         for (Trader trader : traders) {
-            String message = String.format("shop_trader_key %s, shop_trader_name %s, shop_number_trades %d",
-                                          trader.getKey(), trader.getName(), trader.getTrades().size());
+            String message = String.format(translate("shop_trader_key ", langs) + "%s," + 
+            								translate(" shop_trader_name ", langs) + "%s," + 
+            									translate(" shop_number_trades ", langs) + "%d",
+            										trader.getKey(), trader.getName(), trader.getTrades().size());
             sendMessage(sender, message, MessageType.NORMAL);
         }
         return true;
     }
 
-    private boolean isPlayer(CommandSender sender, String permissions) {
+    private boolean isPlayer(CommandSender sender) {
         if (!(sender instanceof Player)) {
-            sendMessage(sender, "shop_err_command_only_player ", MessageType.WARNING);
-            return false;
-        } else if (!sender.hasPermission(permissions)) {
-            sendMessage(sender, "shop_err_not_have_permission ", MessageType.WARNING);
+            sendMessage(sender, translate("shop_err_command_only_player ", getLangs(sender)), MessageType.WARNING);
             return false;
         }
         return true;
@@ -223,7 +253,7 @@ public class MerchantTradeManager {
     private Trader getTrader(CommandSender sender, String traderKey) {
         Trader trader = traderManager.getTrader(traderKey);
         if (trader == null) {
-            sendMessage(sender, "shop_err_no_trader_found_key ", MessageType.WARNING);
+            sendMessage(sender, translate("shop_err_no_trader_found_key ", getLangs(sender)), MessageType.WARNING);
         }
         return trader;
     }
@@ -242,7 +272,7 @@ public class MerchantTradeManager {
         ItemStack rt = tradeItems[2];
 
         if ((i1 == null || i1.getType().isAir()) && (i2 == null || i2.getType().isAir()) || rt == null || rt.getType().isAir()) {
-            sendMessage(sender, "shop_err_no_required_items_slots ", MessageType.WARNING);
+            sendMessage(sender, translate("shop_err_no_required_items_slots ", getLangs(sender)), MessageType.WARNING);
             return false;
         }
         return true;
@@ -251,4 +281,12 @@ public class MerchantTradeManager {
 	private void sendMessage(CommandSender sender, String message, MessageType type) {
     	Messenger.sendMessage(shopPlugin, sender, message, type);
     }
+	
+	private String translate(String key, String[] langs) {
+		return Translator.translateKyeWorld(key, langs, languageManager);
+	}
+	
+	public String[] getLangs(CommandSender sender) {
+		return OtherUtils.getLangs(sender);
+	}
 }

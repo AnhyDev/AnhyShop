@@ -1,13 +1,14 @@
 package ink.anh.shop.trading.process;
 
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
+import ink.anh.lingo.api.Translator;
+import ink.anh.lingo.api.lang.LanguageManager;
 import ink.anh.lingo.messages.MessageType;
 import ink.anh.lingo.messages.Messenger;
 import ink.anh.shop.AnhyShop;
 import ink.anh.shop.Permissions;
 import ink.anh.shop.trading.Trader;
+import ink.anh.shop.utils.OtherUtils;
 import ink.anh.shop.utils.RandomStringGenerator;
 
 import java.util.ArrayList;
@@ -16,21 +17,23 @@ public class TraderCreator {
 
     private TraderManager traderManager;
     private AnhyShop shopPlugin;
+    private LanguageManager languageManager;
 
     public TraderCreator(AnhyShop shopPlugin) {
         this.shopPlugin = shopPlugin;
         this.traderManager = this.shopPlugin.getTraderManager();
+        this.languageManager = this.shopPlugin.getLanguageManager();
     }
 
     public boolean createTrader(CommandSender sender, String[] args) {
     	
-        if (sender instanceof Player && !sender.hasPermission(Permissions.TRADE_CREATE)) {
-            sendMessage(sender, "shop_err_not_have_permission ", MessageType.WARNING);
+    	String[] langs = OtherUtils.checkPlayerPermissions(sender, Permissions.TRADE_CREATE);
+	    if (langs != null && langs[0] == null) {
             return true;
-        }
+	    }
         
         if (args.length < 2) {
-            sender.sendMessage("shop_err_enter_name_trader ");
+            sendMessage(sender, translate("shop_err_enter_name_trader ", langs), MessageType.WARNING);
             return true;
         }
 
@@ -43,34 +46,39 @@ public class TraderCreator {
 
         Trader newTrader = new Trader(key, traderName, new ArrayList<>());
         traderManager.addOrUpdateTrader(newTrader);
-        sender.sendMessage("shop_new_trader " + traderName + " shop_created_with_key " + key);
+        sendMessage(sender, translate("shop_new_trader ", langs) + traderName + 
+        						translate(" shop_created_with_key ", langs) + key, MessageType.NORMAL);
         return true;
     }
 
     public boolean deleteTrader(CommandSender sender, String[] args) {
     	
-        if (sender instanceof Player && !sender.hasPermission(Permissions.TRADE_DELETE)) {
-            sendMessage(sender, "shop_err_not_have_permission ", MessageType.WARNING);
+    	String[] langs = OtherUtils.checkPlayerPermissions(sender, Permissions.TRADE_DELETE);
+	    if (langs != null && langs[0] == null) {
             return true;
-        }
+	    }
         
         if (args.length < 2) {
-            sender.sendMessage("shop_err_enter_trader_key ");
+            sendMessage(sender, translate("shop_err_enter_trader_key ", langs), MessageType.WARNING);
             return true;
         }
 
         String key = args[1];
         if (traderManager.getTrader(key) == null) {
-            sender.sendMessage("shop_err_no_trader_found_key ");
+            sendMessage(sender, translate("shop_err_no_trader_found_key ", langs), MessageType.WARNING);
             return true;
         }
 
         traderManager.removeTrader(key);
-        sender.sendMessage("shop_removed_merchant_key " + key);
+        sendMessage(sender, translate("shop_removed_merchant_key ", langs) + key, MessageType.NORMAL);
         return true;
     }
 
 	private void sendMessage(CommandSender sender, String message, MessageType type) {
     	Messenger.sendMessage(shopPlugin, sender, message, type);
     }
+	
+	private String translate(String key, String[] langs) {
+		return Translator.translateKyeWorld(key, langs, languageManager);
+	}
 }

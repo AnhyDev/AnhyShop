@@ -21,13 +21,13 @@ public class AnhyShop extends JavaPlugin {
     @Override
     public void onLoad() {
     	instance = this;
-		sqlite = new SQLite(this);
-		sqlite.load();
     }
 
     @Override
     public void onEnable() {
     	checkDepends("AnhyLingo");
+		sqlite = new SQLite(this);
+		sqlite.load();
     	configurationManager = new ConfigurationManager(this);
     	languageManager = LangMessage.getInstance(this);
         this.getCommand("shop").setExecutor(new CommandShop(this));
