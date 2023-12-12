@@ -6,8 +6,9 @@ public class Permissions {
     public static final String TRADE_CREATE = "anhyshop.trader.create";
     public static final String TRADE_DELETE = "anhyshop.trader.delete";
     public static final String TRADE_CHANGE_NAME = "anhyshop.trader.rename";
-    public static final String TRADE_OPEN = "anhyshop.trade.open";
-    public static final String TRADE_ADD = "anhyshop.trade.add";
-    public static final String TRADE_REPLACE = "anhyshop.trade.replace";
-    public static final String TRADE_REMOVE = "anhyshop.trade.remove";
+    public static final String TRADE_OPEN = "anhyshop.trader.open";
+    public static final String TRADE_TRADE = "anhyshop.trader.trade";
+    public static final String TRADE_ADD = "anhyshop.product.add";
+    public static final String TRADE_REPLACE = "anhyshop.product.replace";
+    public static final String TRADE_REMOVE = "anhyshop.product.remove";
 }

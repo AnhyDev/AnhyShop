@@ -1,11 +1,10 @@
 main: ink.anh.shop.AnhyShop
 name: AnhyShop
-version: 0.0.1
+version: 0.1.0
 author: AnhyDev
 api-version: 1.13
 description: AnhyShop projekt
 website: http://anh.ink
-softdepend: [AnhyLingo]
 commands:
     shop:
         aliases: [anhyshop]

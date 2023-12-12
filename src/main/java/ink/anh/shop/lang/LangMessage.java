@@ -1,22 +1,22 @@
 package ink.anh.shop.lang;
 
-import ink.anh.lingo.api.lang.LanguageManager;
-import ink.anh.shop.AnhyShop;
+import ink.anh.api.lingo.lang.LanguageManager;
+import ink.anh.shop.GlobalManager;
 
 public class LangMessage extends LanguageManager {
 
     private static LangMessage instance = null;
     private static final Object LOCK = new Object();
 
-    private LangMessage(AnhyShop shopPlugin) {
-        super( shopPlugin, "lang");
+    private LangMessage(GlobalManager manager) {
+        super(manager, "lang");
     }
 
-    public static LangMessage getInstance(AnhyShop shopPlugin) {
+    public static LangMessage getInstance(GlobalManager manager) {
         if (instance == null) {
             synchronized (LOCK) {
                 if (instance == null) {
-                    instance = new LangMessage(shopPlugin);
+                    instance = new LangMessage(manager);
                 }
             }
         }

@@ -7,10 +7,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import ink.anh.lingo.api.Translator;
-import ink.anh.lingo.api.lang.LanguageManager;
-import ink.anh.lingo.messages.MessageType;
-import ink.anh.lingo.messages.Messenger;
+import ink.anh.api.lingo.Translator;
+import ink.anh.api.messages.MessageType;
+import ink.anh.api.messages.Messenger;
 import ink.anh.shop.AnhyShop;
 import ink.anh.shop.Permissions;
 import ink.anh.shop.trading.Trade;
@@ -22,12 +21,10 @@ public class MerchantTradeManager {
 
     private TraderManager traderManager;
     private AnhyShop shopPlugin;
-    private LanguageManager languageManager;
 
     public MerchantTradeManager(AnhyShop shopPlugin) {
         this.shopPlugin = shopPlugin;
-        this.traderManager = this.shopPlugin.getTraderManager();
-        this.languageManager = this.shopPlugin.getLanguageManager();
+        this.traderManager = this.shopPlugin.getGlobalManager().getTraderManager();
     }
 
     public boolean addTrade(CommandSender sender, String[] args) {
@@ -193,6 +190,34 @@ public class MerchantTradeManager {
         sendMessage(sender, translate("shop_err_not_possible_open_trade ", langs) + trader.getKey(), MessageType.WARNING);
         return true;
     }
+
+    public boolean openTrade(CommandSender sender, String[] args) {
+    	
+    	String[] langs = OtherUtils.checkPlayerPermissions(sender, Permissions.TRADE_TRADE);
+	    if (langs != null && langs[0] == null) {
+            return true;
+	    }
+	    
+        if (!isPlayer(sender) || args.length < 2) {
+            return true;
+        }
+
+        String traderKey = args[1];
+        Trader trader = getTrader(sender, traderKey);
+        if (trader == null) {
+        	return true;
+        }
+
+        Player player = (Player) sender;
+
+        // Відкриття торгів для гравця
+        if (VirtualVillager.openTrading(player, trader)) {
+            return true;
+        }
+
+        sendMessage(sender, translate("shop_err_not_possible_open_trade ", langs) + trader.getKey(), MessageType.WARNING);
+        return true;
+    }
     
     public boolean changeTraderName(CommandSender sender, String[] args) {
     	
@@ -279,11 +304,11 @@ public class MerchantTradeManager {
     }
 
 	private void sendMessage(CommandSender sender, String message, MessageType type) {
-    	Messenger.sendMessage(shopPlugin, sender, message, type);
+    	Messenger.sendMessage(shopPlugin.getGlobalManager(), sender, message, type);
     }
 	
 	private String translate(String key, String[] langs) {
-		return Translator.translateKyeWorld(key, langs, languageManager);
+		return Translator.translateKyeWorld(shopPlugin.getGlobalManager(), key, langs);
 	}
 	
 	public String[] getLangs(CommandSender sender) {

@@ -5,14 +5,21 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
-import ink.anh.lingo.api.Translator;
-import ink.anh.lingo.messages.MessageType;
-import ink.anh.lingo.messages.Messenger;
-import ink.anh.lingo.utils.LangUtils;
+import ink.anh.api.lingo.Translator;
+import ink.anh.api.messages.MessageType;
+import ink.anh.api.messages.Messenger;
+import ink.anh.api.utils.LangUtils;
 import ink.anh.shop.AnhyShop;
+import ink.anh.shop.GlobalManager;
 
 public class OtherUtils {
 
+	private static GlobalManager manager;
+	
+	static {
+		manager = AnhyShop.getInstance().getGlobalManager();
+	}
+	
 	public static String getServerVersion() {
 	    String packageName = Bukkit.getServer().getClass().getPackage().getName();
 	    // Версія сервера знаходиться у вигляді 'v1_XX_RY', де XX - версія Minecraft, а Y - ревізія
@@ -53,7 +60,7 @@ public class OtherUtils {
 
             // Перевіряємо наявність дозволу у гравця
             if (!player.hasPermission(permission)) {
-                sendMessage(sender, Translator.translateKyeWorld("shop_err_not_have_permission ", langs, AnhyShop.getInstance().getLanguageManager()), MessageType.ERROR);
+                sendMessage(sender, Translator.translateKyeWorld(manager, "shop_err_not_have_permission ", langs), MessageType.ERROR);
                 return langs;
             }
         }
@@ -62,7 +69,7 @@ public class OtherUtils {
     }
 
 	private static void sendMessage(CommandSender sender, String message, MessageType type) {
-    	Messenger.sendMessage(AnhyShop.getInstance(), sender, message, type);
+    	Messenger.sendMessage(manager, sender, message, type);
     }
 
 }

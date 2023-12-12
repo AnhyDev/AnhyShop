@@ -27,9 +27,4 @@ public class RandomStringGenerator {
 
         return sb.toString();
     }
-
-    public static void main(String[] args) {
-        String randomString = generateRandomString(8);
-        System.out.println("Random String: " + randomString);
-    }
 }

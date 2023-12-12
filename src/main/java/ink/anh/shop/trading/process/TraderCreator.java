@@ -1,11 +1,12 @@
 package ink.anh.shop.trading.process;
 
 import org.bukkit.command.CommandSender;
-import ink.anh.lingo.api.Translator;
-import ink.anh.lingo.api.lang.LanguageManager;
-import ink.anh.lingo.messages.MessageType;
-import ink.anh.lingo.messages.Messenger;
+
+import ink.anh.api.lingo.Translator;
+import ink.anh.api.messages.MessageType;
+import ink.anh.api.messages.Messenger;
 import ink.anh.shop.AnhyShop;
+import ink.anh.shop.GlobalManager;
 import ink.anh.shop.Permissions;
 import ink.anh.shop.trading.Trader;
 import ink.anh.shop.utils.OtherUtils;
@@ -17,12 +18,11 @@ public class TraderCreator {
 
     private TraderManager traderManager;
     private AnhyShop shopPlugin;
-    private LanguageManager languageManager;
+    private GlobalManager manager;
 
     public TraderCreator(AnhyShop shopPlugin) {
         this.shopPlugin = shopPlugin;
-        this.traderManager = this.shopPlugin.getTraderManager();
-        this.languageManager = this.shopPlugin.getLanguageManager();
+        this.manager = this.shopPlugin.getGlobalManager();
     }
 
     public boolean createTrader(CommandSender sender, String[] args) {
@@ -75,10 +75,10 @@ public class TraderCreator {
     }
 
 	private void sendMessage(CommandSender sender, String message, MessageType type) {
-    	Messenger.sendMessage(shopPlugin, sender, message, type);
+    	Messenger.sendMessage(manager, sender, message, type);
     }
 	
 	private String translate(String key, String[] langs) {
-		return Translator.translateKyeWorld(key, langs, languageManager);
+		return Translator.translateKyeWorld(manager, key, langs);
 	}
 }

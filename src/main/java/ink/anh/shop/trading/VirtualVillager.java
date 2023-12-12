@@ -7,11 +7,12 @@ import java.util.ArrayList;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.MerchantRecipe;
 
+import ink.anh.api.lingo.Translator;
+import ink.anh.api.messages.Logger;
+import ink.anh.api.utils.LangUtils;
 import ink.anh.lingo.AnhyLingo;
-import ink.anh.lingo.api.Translator;
-import ink.anh.lingo.lang.TranslateItemStack;
-import ink.anh.lingo.utils.LangUtils;
 import ink.anh.shop.AnhyShop;
+import ink.anh.shop.GlobalManager;
 import ink.anh.shop.utils.OtherUtils;
 
 import org.bukkit.Bukkit;
@@ -20,6 +21,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Merchant;
 
 public class VirtualVillager {
+
+	private static GlobalManager manager;
+	
+	static {
+		manager = AnhyShop.getInstance().getGlobalManager();
+	}
 	
     public static boolean openTrading(Player player, Trader trader) {
         if (trader.getTrades().isEmpty()) {
@@ -27,7 +34,7 @@ public class VirtualVillager {
         }
 
         String[] langs = LangUtils.getPlayerLanguage(player);
-        String traderName = Translator.translateKyeWorld(trader.getName(), langs, AnhyShop.getInstance().getLanguageManager());
+        String traderName = Translator.translateKyeWorld(manager, trader.getName(), langs);
         Merchant merchant = Bukkit.createMerchant(traderName);
         setCustomTrades(merchant, translateTrade(langs, trader.getTrades()));
         player.openMerchant(merchant, true);
@@ -89,9 +96,13 @@ public class VirtualVillager {
 
 
     private static void translateItemStack(ItemStack item, String[] langs) {
-        if (checkItem(item)) {
-        	TranslateItemStack translater = new TranslateItemStack(AnhyLingo.getInstance());
-        	translater.modifyItem(langs, item);
+        if (manager.getAnhyLingo() != null && checkItem(item)) {
+        	if (manager.isDebug())
+        		Logger.warn(manager.getPlugin(), "Sent for proofreading and translation: " + item.getItemMeta().getDisplayName());
+        	
+        	ink.anh.lingo.item.TranslateItemStack translator = new ink.anh.lingo.item.TranslateItemStack((AnhyLingo) manager.getAnhyLingo());
+        	
+        	translator.modifyItem(langs, item);
         }
     }
     
