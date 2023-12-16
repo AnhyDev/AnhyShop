@@ -107,14 +107,14 @@
         <dependency>
 	    	<groupId>com.github.AnhyDev</groupId>
 	    	<artifactId>AnhyLibAPI</artifactId>
-	    	<version>v1.2.0</version>
+	    	<version>v1.3.3</version>
             <scope>provided</scope>
 		</dependency>
         
         <dependency>
 	    	<groupId>com.github.AnhyDev</groupId>
 	    	<artifactId>AnhyLingo</artifactId>
-	    	<version>v0.2.0</version>
+	    	<version>v0.3.3</version>
             <scope>provided</scope>
 		</dependency>
 

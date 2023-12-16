@@ -102,7 +102,7 @@ public class VirtualVillager {
         	
         	ink.anh.lingo.item.TranslateItemStack translator = new ink.anh.lingo.item.TranslateItemStack((AnhyLingo) manager.getAnhyLingo());
         	
-        	translator.modifyItem(langs, item);
+        	translator.modifyItem(langs, item, false);
         }
     }
     

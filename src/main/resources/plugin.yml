@@ -3,8 +3,10 @@ name: AnhyShop
 version: 0.1.0
 author: AnhyDev
 api-version: 1.13
-description: AnhyShop projekt
-website: http://anh.ink
+depend: [AnhyLibAPI]
+softdepend: [AnhyLingo]
+description: AnhyShop is a unique plugin for creating merchants and trading on Minecraft servers
+website: http://anh.ink/anhyshop
 commands:
     shop:
         aliases: [anhyshop]

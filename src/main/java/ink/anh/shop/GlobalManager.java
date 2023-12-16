@@ -32,7 +32,7 @@ public class GlobalManager extends LibraryManager {
     private boolean debug;
 	
 	private GlobalManager(AnhyShop shopPlugin) {
-		super();
+		super(shopPlugin);
 		this.shopPlugin = shopPlugin;
 		this.saveDefaultConfig();
 		this.loadFields(shopPlugin);

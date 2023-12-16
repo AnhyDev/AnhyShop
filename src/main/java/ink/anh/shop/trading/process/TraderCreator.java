@@ -23,6 +23,7 @@ public class TraderCreator {
     public TraderCreator(AnhyShop shopPlugin) {
         this.shopPlugin = shopPlugin;
         this.manager = this.shopPlugin.getGlobalManager();
+        this.traderManager = this.shopPlugin.getGlobalManager().getTraderManager();
     }
 
     public boolean createTrader(CommandSender sender, String[] args) {
