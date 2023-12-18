@@ -1,5 +1,3 @@
-![AnhyShop Logo](https://dev.anh.ink/images/shoplogo.png "AnhyShop Minecraft Plugin. Anhydrite Developer")
-
 # AnhyShop
 Is a unique plugin for creating merchants and trading on Minecraft servers, based on the trading inventory of villagers. Tested on `Spigot`, `Paper`, `Purpur` server cores, version `1.20.2`.
 
@@ -38,10 +36,22 @@ Additionally, **AnhyShop** is compatible with [**AnhyLingo**](https://dev.anh.in
 2. **Replace an existing trade** `(anhyshop.product.replace)`: `/shop replace <key>` - Replace or add products.
 3. **Delete an existing trade** `(anhyshop.product.remove)`: `/shop remove <key>` - Remove a product from bidding.
 
-![Add Trade](/images/addtrade.png "Work with traders")
+![Add Trade](https://dev.anh.ink/images/addtrade.png "Work with traders")
 
 ### Directory Structure
 - `lang`: Files with translations of plugin system messages and translations of trader names.
+```yaml
+trader_name_emberlyn: Emberlyn Gemwhisper
+trader_name_flint: Flint Firebeard
+trader_name_mira: Mira Mysticsight
+trader_name_silas: Silas Silverthread
+trader_name_cedric: Cedric Stonehand
+trader_name_willow: Willow Wildroot
+trader_name_raven: Raven Nightshade
+trader_name_eldon: Eldon Ironfoot
+trader_name_aurora: Aurora Skydancer
+trader_name_gideon: Gideon Goldspinner
+```
 
 ### Language Personalization
 **Multilingual Functionality in AnhyShop with AnhyLibAPI and AnhyLingo Integration**
