@@ -22,11 +22,11 @@ Additionally, **AnhyShop** is compatible with [**AnhyLingo**](https://dev.anh.in
 ### Work with Traders
 (with permission `anhyshop.trader.*`)
 
-1. **Information about traders** `(anhyshop.trader.view)`: `/shop list` - Displays a list of all traders.
-2. **Create a new trader** `(anhyshop.trader.create)`: `/shop newt <name>` - Creates a new trader.
-3. **Remove trader** `(anhyshop.trader.delete)`: `/shop delt <key>` - Deletes a trader.
-4. **Rename trader** `(anhyshop.trader.rename)`: `/shop rename <key> <new_name>` - Renames a trader.
-5. **Open trade inventory** `(anhyshop.trader.open)`: `/shop open <key> <player_name>` - Opens trade for a player.
+1. **Information about traders** `(anhyshop.trader.view)`: `/shop list` - Displays a list of all traders. Available from the console.
+2. **Create a new trader** `(anhyshop.trader.create)`: `/shop newt <name>` - Creates a new trader. Available from the console.
+3. **Remove trader** `(anhyshop.trader.delete)`: `/shop delt <key>` - Deletes a trader. Available from the console.
+4. **Rename trader** `(anhyshop.trader.rename)`: `/shop rename <key> <new_name>` - Renames a trader. Available from the console.
+5. **Open trade inventory** `(anhyshop.trader.open)`: `/shop open <key> <player_name>` - Opens trade for a player. Available from the console.
 6. **Trade by yourself** `(anhyshop.trader.trade)`: `/shop trade <key>` - Opens a trade.
 
 ### Operations with Goods
