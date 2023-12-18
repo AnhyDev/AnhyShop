@@ -59,4 +59,5 @@ trader_name_gideon: Gideon Goldspinner
 1. **System Messages Localization** (AnhyLibAPI): Stored in `shop_XX.yml` files within the `lang` folder.
 2. **Trader Names Translation** (AnhyLibAPI): Add translations in `traders_XX.yml`.
 3. **Multilingual Item Display in Trades** (AnhyLingo): Trades involving multilingual items display these items in the player's chosen language.
-AnhyShop's integration with AnhyLibAPI and AnhyLingo enhances usability across different languages and enriches the trading experience, making it inclusive and globally accessible.
+
+##### AnhyShop's integration with AnhyLibAPI and AnhyLingo enhances usability across different languages and enriches the trading experience, making it inclusive and globally accessible.
