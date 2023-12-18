@@ -17,7 +17,7 @@ Additionally, **AnhyShop** is compatible with [**AnhyLingo**](https://dev.anh.in
 (with permission `anhyshop.*`)
 
 #### Reloading Commands
-- **Reloading the plugin** `(anhyshop.reload)`: `/shop reload` - Reloads the language files, configurations, and traders from the database.
+- **Reloading the plugin** `(anhyshop.reload)`: `/shop reload` - Reloads the language files, configurations, and traders from the database. Available from the console.
 
 ### Work with Traders
 (with permission `anhyshop.trader.*`)
