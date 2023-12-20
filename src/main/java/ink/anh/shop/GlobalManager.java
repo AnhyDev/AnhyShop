@@ -1,12 +1,10 @@
 package ink.anh.shop;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
 import ink.anh.api.LibraryManager;
@@ -15,7 +13,6 @@ import ink.anh.api.lingo.lang.LanguageManager;
 import ink.anh.api.messages.Logger;
 import ink.anh.shop.lang.LangMessage;
 import ink.anh.shop.trading.process.TraderManager;
-import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.md_5.bungee.api.ChatColor;
 
 public class GlobalManager extends LibraryManager {
@@ -28,7 +25,6 @@ public class GlobalManager extends LibraryManager {
 	private TraderManager traderManager;
     private String pluginName;
     private String defaultLang;
-    private static BukkitAudiences bukkitAudiences;
     private boolean debug;
 	
 	private GlobalManager(AnhyShop shopPlugin) {
@@ -70,11 +66,6 @@ public class GlobalManager extends LibraryManager {
 	}
 
 	@Override
-	public BukkitAudiences getBukkitAudiences() {
-		return bukkitAudiences;
-	}
-
-	@Override
 	public LanguageManager getLanguageManager() {
 		return this.langManager;
 	}
@@ -95,7 +86,6 @@ public class GlobalManager extends LibraryManager {
     
     private void loadFields(AnhyShop shopPlugin) {
     	setAnhyLingo();
-        bukkitAudiences = BukkitAudiences.create(shopPlugin);
         defaultLang = shopPlugin.getConfig().getString("language", "en");
         pluginName = ChatColor.translateAlternateColorCodes('&',shopPlugin.getConfig().getString("plugin_name", "AnhyShop"));
         debug = shopPlugin.getConfig().getBoolean("debug", false);
@@ -104,19 +94,19 @@ public class GlobalManager extends LibraryManager {
     }
 
     private void saveDefaultConfig() {
-    	File configFile = new File(shopPlugin.getDataFolder(), "config.yml");
-        if (!configFile.exists()) {
-            YamlConfiguration defaultConfig = new YamlConfiguration();
-            defaultConfig.options().setHeader(logo());
-            defaultConfig.set("plugin_name", "AnhyShop");
-            defaultConfig.set("language", "en");
-            //defaultConfig.set("debug", false);
-            try {
-                defaultConfig.save(configFile);
-                Logger.warn(shopPlugin, "Default configuration created. ");
-            } catch (IOException e) {
-                e.printStackTrace();
+        File dataFolder = shopPlugin.getDataFolder();
+        if (!dataFolder.exists()) {
+            boolean created = dataFolder.mkdirs(); // Спроба створити папку
+            if (!created) {
+                Logger.error(shopPlugin, "Could not create plugin directory: " + dataFolder.getPath());
+                return;
             }
+        }
+
+        File configFile = new File(dataFolder, "config.yml");
+        if (!configFile.exists()) {
+            shopPlugin.getConfig().options().copyDefaults(true);
+            shopPlugin.saveDefaultConfig();
         }
     }
 

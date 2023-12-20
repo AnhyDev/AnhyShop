@@ -38,7 +38,7 @@ public class Trade {
 	
 	public Trade(Trade trade) {
 		this.item1 = trade.getItem1();
-		this.item2 = trade.item2;
+		this.item2 = trade.getItem2();
 		this.rewardItem = trade.getRewardItem();
 	}
 

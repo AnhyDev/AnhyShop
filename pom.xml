@@ -9,7 +9,7 @@
 
     <groupId>ink.anh</groupId>
     <artifactId>AnhyShop</artifactId>
-    <version>0.1.0</version>
+    <version>0.3.0</version>
     <name>AnhyShop</name>
     <description>AnhyShop projekt</description>
     
@@ -93,28 +93,28 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.20.2-R0.1-SNAPSHOT</version>
+            <version>1.17.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
-            <version>1.20.2-R0.1-SNAPSHOT</version>
+            <version>1.17.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         
         <dependency>
 	    	<groupId>com.github.AnhyDev</groupId>
 	    	<artifactId>AnhyLibAPI</artifactId>
-	    	<version>v1.3.3</version>
+	    	<version>v1.3.5</version>
             <scope>provided</scope>
 		</dependency>
         
         <dependency>
 	    	<groupId>com.github.AnhyDev</groupId>
 	    	<artifactId>AnhyLingo</artifactId>
-	    	<version>v0.3.3</version>
+	    	<version>v0.3.4</version>
             <scope>provided</scope>
 		</dependency>
 

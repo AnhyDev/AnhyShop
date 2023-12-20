@@ -10,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import ink.anh.api.lingo.Translator;
 import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Messenger;
+import ink.anh.api.utils.StringUtils;
 import ink.anh.shop.AnhyShop;
 import ink.anh.shop.Permissions;
 import ink.anh.shop.trading.Trade;
@@ -231,7 +232,7 @@ public class MerchantTradeManager {
         }
 
         String traderKey = args[1];
-        String newName = args[2];
+        String newName = StringUtils.colorize(args[2]);
         Trader trader = getTrader(sender, traderKey);
         if (trader == null) {
         	return true;
@@ -284,9 +285,21 @@ public class MerchantTradeManager {
     }
 
     private ItemStack[] getTradeItems(Player player) {
+        ItemStack firstItem = player.getInventory().getItem(0);
+        ItemStack secondItem = player.getInventory().getItem(1);
+
+        // Перевірка, чи перший предмет дорівнює null або повітрю
+        if ((firstItem == null || firstItem.getType().isAir()) &&
+            secondItem != null && !secondItem.getType().isAir()) {
+            // Обмін місцями, якщо другий предмет не дорівнює null або повітрю
+            firstItem = secondItem;
+            secondItem = player.getInventory().getItem(0); // Оновлення другого предмета
+        }
+
+        // Повернення масиву предметів
         return new ItemStack[] {
-            player.getInventory().getItem(0),
-            player.getInventory().getItem(1),
+            firstItem,
+            secondItem,
             player.getInventory().getItem(2)
         };
     }

@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 
+import ink.anh.api.messages.Logger;
 import ink.anh.shop.AnhyShop;
 
 
@@ -21,12 +22,21 @@ public class SQLite extends Database{
     }
     		
     public Connection getSQLConnection() {
-        File dataFolder = new File(AnhyShop.getInstance().getDataFolder(), dbname+"s.db");
-        if (!dataFolder.exists()){
+
+        File dataFolder = shopPlugin.getDataFolder();
+        if (!dataFolder.exists()) {
+            boolean created = dataFolder.mkdirs(); // Спроба створити папку
+            if (!created) {
+                Logger.error(shopPlugin, "Could not create plugin directory: " + dataFolder.getPath());
+                return null;
+            }
+        }
+        File dataBase= new File(dataFolder, dbname+"s.db");
+        if (!dataBase.exists()){
             try {
-                dataFolder.createNewFile();
+            	dataBase.createNewFile();
             } catch (IOException e) {
-            	AnhyShop.getInstance().getLogger().log(Level.SEVERE, "File write error: "+dbname+"s.db");
+            	shopPlugin.getLogger().log(Level.SEVERE, "File write error: "+dbname+"s.db");
             }
         }
         try {
@@ -34,12 +44,12 @@ public class SQLite extends Database{
                 return connection;
             }
             Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:" + dataFolder);
+            connection = DriverManager.getConnection("jdbc:sqlite:" + dataBase);
             return connection;
         } catch (SQLException ex) {
-        	AnhyShop.getInstance().getLogger().log(Level.SEVERE,"SQLite exception on initialize", ex);
+        	shopPlugin.getLogger().log(Level.SEVERE,"SQLite exception on initialize", ex);
         } catch (ClassNotFoundException ex) {
-        	AnhyShop.getInstance().getLogger().log(Level.SEVERE, "You need the SQLite JBDC library. Google it. Put it in /lib folder.");
+        	shopPlugin.getLogger().log(Level.SEVERE, "You need the SQLite JBDC library. Google it. Put it in /lib folder.");
         }
         return null;
     }

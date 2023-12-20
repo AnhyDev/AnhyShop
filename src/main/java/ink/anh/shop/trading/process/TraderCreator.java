@@ -5,6 +5,7 @@ import org.bukkit.command.CommandSender;
 import ink.anh.api.lingo.Translator;
 import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Messenger;
+import ink.anh.api.utils.StringUtils;
 import ink.anh.shop.AnhyShop;
 import ink.anh.shop.GlobalManager;
 import ink.anh.shop.Permissions;
@@ -38,7 +39,7 @@ public class TraderCreator {
             return true;
         }
 
-        String traderName = args[1];
+        String traderName = StringUtils.colorize(args[1]);
         String key;
 
         do {
