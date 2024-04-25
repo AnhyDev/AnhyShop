@@ -4,24 +4,23 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-import ink.anh.api.lingo.Translator;
 import ink.anh.api.messages.MessageType;
-import ink.anh.api.messages.Messenger;
+import ink.anh.api.messages.Sender;
+import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.shop.AnhyShop;
-import ink.anh.shop.GlobalManager;
 import ink.anh.shop.Permissions;
+import ink.anh.shop.sellers.SellersSubCommand;
 import ink.anh.shop.trading.process.MerchantTradeManager;
 import ink.anh.shop.trading.process.TraderCreator;
 import ink.anh.shop.utils.OtherUtils;
 
-public class CommandShop implements CommandExecutor {
-	
-	private AnhyShop shopPlugin;
-	private GlobalManager manager;
+public class CommandShop extends Sender implements CommandExecutor {
 
+	AnhyShop shopPlugin;
+	
 	public CommandShop(AnhyShop shopPlugin) {
-		this.shopPlugin = shopPlugin;
-		this.manager = shopPlugin.getGlobalManager();
+    	super(shopPlugin.getGlobalManager());
+    	this.shopPlugin = shopPlugin;
 	}
 
 	@Override
@@ -47,6 +46,8 @@ public class CommandShop implements CommandExecutor {
             	return new MerchantTradeManager(shopPlugin).openTradeForPlayer(sender, args);
             case "trade":
             	return new MerchantTradeManager(shopPlugin).openTrade(sender, args);
+            case "seller":
+            	return new SellersSubCommand(shopPlugin).onSubCommand(sender, args);
             case "reload":
                 return reload(sender);
             default:
@@ -62,14 +63,10 @@ public class CommandShop implements CommandExecutor {
             return true;
 	    }
 	    
-        if (manager.reload()) {
-            sendMessage(sender, Translator.translateKyeWorld(manager,"shop_language_reloaded ", langs), MessageType.NORMAL);
+        if (shopPlugin.getGlobalManager().reload()) {
+            sendMessage(new MessageForFormatting("shop_language_reloaded ", null), MessageType.NORMAL, sender);
             return true;
         }
         return false;
-    }
-
-	private void sendMessage(CommandSender sender, String message, MessageType type) {
-    	Messenger.sendMessage(manager, sender, message, type);
     }
 }

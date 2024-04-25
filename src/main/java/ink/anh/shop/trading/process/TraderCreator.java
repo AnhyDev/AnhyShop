@@ -2,28 +2,25 @@ package ink.anh.shop.trading.process;
 
 import org.bukkit.command.CommandSender;
 
-import ink.anh.api.lingo.Translator;
+import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;
-import ink.anh.api.messages.Messenger;
+import ink.anh.api.messages.Sender;
 import ink.anh.api.utils.StringUtils;
 import ink.anh.shop.AnhyShop;
-import ink.anh.shop.GlobalManager;
 import ink.anh.shop.Permissions;
 import ink.anh.shop.trading.Trader;
 import ink.anh.shop.utils.OtherUtils;
 import ink.anh.shop.utils.RandomStringGenerator;
-
 import java.util.ArrayList;
 
-public class TraderCreator {
+public class TraderCreator extends Sender {
 
+	AnhyShop shopPlugin;
     private TraderManager traderManager;
-    private AnhyShop shopPlugin;
-    private GlobalManager manager;
 
     public TraderCreator(AnhyShop shopPlugin) {
-        this.shopPlugin = shopPlugin;
-        this.manager = this.shopPlugin.getGlobalManager();
+    	super(shopPlugin.getGlobalManager());
+    	this.shopPlugin = shopPlugin;
         this.traderManager = this.shopPlugin.getGlobalManager().getTraderManager();
     }
 
@@ -35,7 +32,7 @@ public class TraderCreator {
 	    }
         
         if (args.length < 2) {
-            sendMessage(sender, translate("shop_err_enter_name_trader ", langs), MessageType.WARNING);
+            sendMessage(new MessageForFormatting("shop_err_enter_name_trader ", null), MessageType.WARNING, sender);
             return true;
         }
 
@@ -48,8 +45,7 @@ public class TraderCreator {
 
         Trader newTrader = new Trader(key, traderName, new ArrayList<>());
         traderManager.addOrUpdateTrader(newTrader);
-        sendMessage(sender, translate("shop_new_trader ", langs) + traderName + 
-        						translate(" shop_created_with_key ", langs) + key, MessageType.NORMAL);
+        sendMessage(new MessageForFormatting("shop_new_trader %s shop_created_with_key %s", new String[] {traderName, key}), MessageType.NORMAL, sender);
         return true;
     }
 
@@ -61,26 +57,18 @@ public class TraderCreator {
 	    }
         
         if (args.length < 2) {
-            sendMessage(sender, translate("shop_err_enter_trader_key ", langs), MessageType.WARNING);
+            sendMessage(new MessageForFormatting("shop_err_enter_trader_key ", null), MessageType.WARNING, sender);
             return true;
         }
 
         String key = args[1];
         if (traderManager.getTrader(key) == null) {
-            sendMessage(sender, translate("shop_err_no_trader_found_key ", langs), MessageType.WARNING);
+            sendMessage(new MessageForFormatting("shop_err_no_trader_found_key ", null), MessageType.WARNING, sender);
             return true;
         }
 
         traderManager.removeTrader(key);
-        sendMessage(sender, translate("shop_removed_merchant_key ", langs) + key, MessageType.NORMAL);
+        sendMessage(new MessageForFormatting("shop_removed_merchant_key %s", new String[] {key}), MessageType.NORMAL, sender);
         return true;
     }
-
-	private void sendMessage(CommandSender sender, String message, MessageType type) {
-    	Messenger.sendMessage(manager, sender, message, type);
-    }
-	
-	private String translate(String key, String[] langs) {
-		return Translator.translateKyeWorld(manager, key, langs);
-	}
 }

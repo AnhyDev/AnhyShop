@@ -13,10 +13,12 @@ public abstract class Database {
 	public AnhyShop shopPlugin;
     protected Connection connection;
     public String shop;
+    public String sellerList;
 
     public Database(AnhyShop instance){
     	this.shopPlugin = instance;
         this.shop = "shop";
+        this.sellerList = "sellerList";
     }
 
     public abstract Connection getSQLConnection();

@@ -7,9 +7,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import ink.anh.api.lingo.Translator;
+import ink.anh.api.messages.MessageComponents;
+import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Messenger;
+import ink.anh.api.messages.Sender;
+import ink.anh.api.messages.MessageComponents.MessageBuilder;
 import ink.anh.api.utils.StringUtils;
 import ink.anh.shop.AnhyShop;
 import ink.anh.shop.Permissions;
@@ -18,13 +21,14 @@ import ink.anh.shop.trading.Trader;
 import ink.anh.shop.trading.VirtualVillager;
 import ink.anh.shop.utils.OtherUtils;
 
-public class MerchantTradeManager {
+public class MerchantTradeManager extends Sender {
 
+	AnhyShop shopPlugin;
     private TraderManager traderManager;
-    private AnhyShop shopPlugin;
 
     public MerchantTradeManager(AnhyShop shopPlugin) {
-        this.shopPlugin = shopPlugin;
+    	super(shopPlugin.getGlobalManager());
+    	this.shopPlugin = shopPlugin;
         this.traderManager = this.shopPlugin.getGlobalManager().getTraderManager();
     }
 
@@ -54,7 +58,7 @@ public class MerchantTradeManager {
         ItemStack rt = tradeItems[2];
         for (Trade existingTrade : trader.getTrades()) {
             if (existingTrade.getRewardItem().isSimilar(rt)) {
-                sendMessage(sender, translate("shop_err_trade_already_exists ", langs), MessageType.WARNING);
+                sendMessage(new MessageForFormatting("shop_err_trade_already_exists ", null), MessageType.WARNING, sender);
                 return true;
             }
         }
@@ -63,7 +67,7 @@ public class MerchantTradeManager {
         trader.addTrade(newTrade);
         traderManager.addOrUpdateTrader(trader);
 
-        sendMessage(sender, translate("shop_trade_added_trader ", langs) + traderKey, MessageType.NORMAL);
+        sendMessage(new MessageForFormatting("shop_trade_added_trader %s", new String[] {traderKey}), MessageType.NORMAL, sender);
         return true;
     }
 
@@ -103,13 +107,13 @@ public class MerchantTradeManager {
         }
 
         if (!tradeReplaced) {
-            sendMessage(sender, translate("shop_no_trades_found_create_new_trade ", langs), MessageType.WARNING);
+            sendMessage(new MessageForFormatting("shop_no_trades_found_create_new_trade ", null), MessageType.WARNING, sender);
             Trade newTrade = new Trade(tradeItems[0], tradeItems[1], rt);
             trader.addTrade(newTrade);
         }
 
         traderManager.addOrUpdateTrader(trader);
-        sendMessage(sender, translate("shop_trade_is_updated_trader ", langs) + traderKey, MessageType.NORMAL);
+        sendMessage(new MessageForFormatting("shop_trade_is_updated_trader %s", new String[] {traderKey}), MessageType.NORMAL, sender);
         return true;
     }
 
@@ -133,7 +137,7 @@ public class MerchantTradeManager {
         Player player = (Player) sender;
         ItemStack rt = player.getInventory().getItem(2);
         if (rt == null || rt.getType().isAir()) {
-            sendMessage(sender, translate("shop_err_no_found_reward_item ", langs), MessageType.WARNING);
+            sendMessage(new MessageForFormatting("shop_err_no_found_reward_item ", null), MessageType.WARNING, sender);
             return true;
         }
 
@@ -147,13 +151,13 @@ public class MerchantTradeManager {
         }
 
         if (!tradeRemoved) {
-            sendMessage(sender, translate("shop_err_no_rew_trades_found ", langs), MessageType.WARNING);
+            sendMessage(new MessageForFormatting("shop_err_no_rew_trades_found ", null), MessageType.WARNING, sender);
             return true;
         }
 
         traderManager.addOrUpdateTrader(trader);
-        sendMessage(sender, translate("shop_trade_with_reward ", langs) + rt.getType().toString() + 
-        						translate(" shop_removed_from_trader ", langs) + traderKey, MessageType.ESPECIALLY);
+        sendMessage(new MessageForFormatting("shop_trade_with_reward %s shop_removed_from_trader %s", new String[] {rt.getType().toString(), traderKey}), MessageType.ESPECIALLY, sender);
+
         return true;
     }
 
@@ -165,7 +169,7 @@ public class MerchantTradeManager {
 	    }
 	    
         if (args.length < 3) {
-            sendMessage(sender, translate("shop_err_key_trader_nickname_player ", langs), MessageType.WARNING);
+            sendMessage(new MessageForFormatting("shop_err_key_trader_nickname_player ", null), MessageType.WARNING, sender);
             return true;
         }
 
@@ -178,17 +182,17 @@ public class MerchantTradeManager {
         String playerName = args[2];
         Player player = shopPlugin.getServer().getPlayer(playerName);
         if (player == null) {
-            sendMessage(sender, translate("shop_err_no_player_found_nickname ", langs), MessageType.WARNING);
+            sendMessage(new MessageForFormatting("shop_err_no_player_found_nickname ", null), MessageType.WARNING, sender);
             return true;
         }
 
         // Відкриття торгів для гравця
         if (VirtualVillager.openTrading(player, trader)) {
-            sendMessage(sender, translate("shop_trade_open_player ", langs) + playerName, MessageType.NORMAL);
+            sendMessage(new MessageForFormatting("shop_err_key_trader_nickname_player %s", new String[] {playerName}), MessageType.WARNING, sender);
             return true;
         }
 
-        sendMessage(sender, translate("shop_err_not_possible_open_trade ", langs) + trader.getKey(), MessageType.WARNING);
+        sendMessage(new MessageForFormatting("shop_err_not_possible_open_trade %s", new String[] {trader.getKey()}), MessageType.WARNING, sender);
         return true;
     }
 
@@ -216,7 +220,7 @@ public class MerchantTradeManager {
             return true;
         }
 
-        sendMessage(sender, translate("shop_err_not_possible_open_trade ", langs) + trader.getKey(), MessageType.WARNING);
+        sendMessage(new MessageForFormatting("shop_err_not_possible_open_trade %s", new String[] {trader.getKey()}), MessageType.WARNING, sender);
         return true;
     }
     
@@ -240,8 +244,7 @@ public class MerchantTradeManager {
 
         trader.setName(newName);
         traderManager.addOrUpdateTrader(trader);
-        sendMessage(sender, translate("shop_name_trader_with_key ", langs) + traderKey + 
-        						translate(" shop_name_trader_changed_to ", langs) + newName, MessageType.NORMAL);
+        sendMessage(new MessageForFormatting("shop_name_trader_with_key %s shop_name_trader_changed_to %s", new String[] {traderKey, newName}), MessageType.NORMAL, sender);
         return true;
     }
 
@@ -254,23 +257,28 @@ public class MerchantTradeManager {
         
         List<Trader> traders = traderManager.getAllTraders();
         if (traders.isEmpty()) {
-            sendMessage(sender, translate("shop_err_no_traders_found ", langs), MessageType.WARNING);
+            sendMessage(new MessageForFormatting("shop_err_no_traders_found ", null), MessageType.WARNING, sender);
             return true;
         }
 
         for (Trader trader : traders) {
-            String message = String.format(translate("shop_trader_key ", langs) + "%s," + 
-            								translate(" shop_trader_name ", langs) + "%s," + 
-            									translate(" shop_number_trades ", langs) + "%d",
-            										trader.getKey(), trader.getName(), trader.getTrades().size());
-            sendMessage(sender, message, MessageType.NORMAL);
+            String message = String.format(translate(sender, "shop_trader_key %s, shop_trader_name %s, shop_number_trades %d"), 
+            		trader.getKey(), trader.getName(), trader.getTrades().size());
+            MessageBuilder mBuilder = MessageComponents.builder();
+            mBuilder.content(message)
+                    .hexColor(MessageType.NORMAL.getColor(true))
+                    .hoverMessage(trader.getKey())
+                    .clickActionCopy(trader.getKey())
+                    .build();
+
+            Messenger.sendMessage(shopPlugin, sender, mBuilder.build(), message);
         }
         return true;
     }
 
     private boolean isPlayer(CommandSender sender) {
         if (!(sender instanceof Player)) {
-            sendMessage(sender, translate("shop_err_command_only_player ", getLangs(sender)), MessageType.WARNING);
+            sendMessage(new MessageForFormatting("shop_err_command_only_player ", null), MessageType.WARNING, sender);
             return false;
         }
         return true;
@@ -279,7 +287,7 @@ public class MerchantTradeManager {
     private Trader getTrader(CommandSender sender, String traderKey) {
         Trader trader = traderManager.getTrader(traderKey);
         if (trader == null) {
-            sendMessage(sender, translate("shop_err_no_trader_found_key ", getLangs(sender)), MessageType.WARNING);
+            sendMessage(new MessageForFormatting("shop_err_no_trader_found_key ", null), MessageType.WARNING, sender);
         }
         return trader;
     }
@@ -310,21 +318,9 @@ public class MerchantTradeManager {
         ItemStack rt = tradeItems[2];
 
         if ((i1 == null || i1.getType().isAir()) && (i2 == null || i2.getType().isAir()) || rt == null || rt.getType().isAir()) {
-            sendMessage(sender, translate("shop_err_no_required_items_slots ", getLangs(sender)), MessageType.WARNING);
+            sendMessage(new MessageForFormatting("shop_err_no_required_items_slots ", null), MessageType.WARNING, sender);
             return false;
         }
         return true;
     }
-
-	private void sendMessage(CommandSender sender, String message, MessageType type) {
-    	Messenger.sendMessage(shopPlugin.getGlobalManager(), sender, message, type);
-    }
-	
-	private String translate(String key, String[] langs) {
-		return Translator.translateKyeWorld(shopPlugin.getGlobalManager(), key, langs);
-	}
-	
-	public String[] getLangs(CommandSender sender) {
-		return OtherUtils.getLangs(sender);
-	}
 }

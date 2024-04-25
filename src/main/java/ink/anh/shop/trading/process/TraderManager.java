@@ -10,6 +10,7 @@ import org.bukkit.Bukkit;
 import ink.anh.shop.AnhyShop;
 import ink.anh.shop.trading.Trader;
 import ink.anh.shop.db.SQLiteTraders;
+import ink.anh.shop.sellers.SellersManager;
 
 public class TraderManager {
 
@@ -55,6 +56,7 @@ public class TraderManager {
         Trader trader = traderMap.remove(key);
         if (trader != null) {
             delTrader(trader); // Видаляємо з бази даних
+            SellersManager.getInstance().removeSellers(trader); // Видаляємо продавців, пов'язаних з трейдером
         }
     }
 

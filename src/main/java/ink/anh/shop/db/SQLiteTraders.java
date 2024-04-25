@@ -26,9 +26,12 @@ public class SQLiteTraders extends SQLite {
         try (Connection conn = getSQLConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, trader.getKey());
-            pstmt.executeUpdate();
-            shopPlugin.getServer().getLogger().info("shop_removed_from_database: " + trader.getName() + ", key: " + trader.getKey());
-
+            int affectedRows = pstmt.executeUpdate();
+            if (affectedRows > 0) {
+                shopPlugin.getServer().getLogger().info("Shop removed from database: " + trader.getName() + ", key: " + trader.getKey());
+            } else {
+                shopPlugin.getServer().getLogger().info("No shop found to remove for key: " + trader.getKey());
+            }
         } catch (SQLException ex) {
             shopPlugin.getLogger().log(Level.SEVERE, "Error executing SQL query", ex);
         }
@@ -36,10 +39,10 @@ public class SQLiteTraders extends SQLite {
 
     public List<Trader> getTradesmansDB() {
         List<Trader> trmans = new ArrayList<>();
+        String sql = "SELECT * FROM shop;";
         try (Connection conn = getSQLConnection();
-             PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + shop + ";")) {
-            if (ps == null) return null;
-            ResultSet rs = ps.executeQuery();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 Trader trm = new Trader(
                         rs.getString("key"),
@@ -54,13 +57,18 @@ public class SQLiteTraders extends SQLite {
     }
 
     public void setTradesmanDB(Trader trader) {
+        String sql = "INSERT OR REPLACE INTO shop (key, name, trades) VALUES (?, ?, ?)";
         try (Connection conn = getSQLConnection();
-             PreparedStatement ps = conn.prepareStatement("INSERT OR REPLACE INTO " + shop
-                     + " (key,name,trades) VALUES(?,?,?)")) {
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, trader.getKey());
             ps.setString(2, trader.getName());
             ps.setString(3, setTrades(trader.getTrades()));
-            ps.executeUpdate();
+            int affectedRows = ps.executeUpdate();
+            if (affectedRows > 0) {
+                shopPlugin.getServer().getLogger().info("Trader details updated for: " + trader.getName());
+            } else {
+                shopPlugin.getServer().getLogger().info("Failed to insert or replace trader: " + trader.getName());
+            }
         } catch (SQLException ex) {
             shopPlugin.getLogger().log(Level.SEVERE, "Error executing SQL query", ex);
         }

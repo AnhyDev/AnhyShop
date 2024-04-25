@@ -4,6 +4,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import ink.anh.shop.command.CommandShop;
 import ink.anh.shop.db.SQLite;
+import ink.anh.shop.sellers.InteractionListener;
 
 public class AnhyShop extends JavaPlugin {
 
@@ -29,6 +30,7 @@ public class AnhyShop extends JavaPlugin {
 		sqlite.load();
 		manager = GlobalManager.getManager(this);
         this.getCommand("shop").setExecutor(new CommandShop(this));
+        getServer().getPluginManager().registerEvents(new InteractionListener(this), this);
     }
     
 	public static AnhyShop getInstance() {

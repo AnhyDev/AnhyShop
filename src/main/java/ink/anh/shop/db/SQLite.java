@@ -64,6 +64,12 @@ public class SQLite extends Database{
 /* 2*/            	+ "`name` TEXT,"
 /* 3*/            	+ "`trades` TEXT, PRIMARY KEY (`key`));");
 
+            s.executeUpdate("CREATE TABLE IF NOT EXISTS sellerList ("
+/* 1*/            	+ "`key` INTEGER NOT NULL UNIQUE,"
+/* 2*/            	+ "`trader` TEXT,"
+/* 3*/            	+ "`type` TEXT,"
+/* 4*/            	+ "`saler` TEXT, PRIMARY KEY (`key`));");
+
             s.close();
             s.close();
         } catch (SQLException e) {

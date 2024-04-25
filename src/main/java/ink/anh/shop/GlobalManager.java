@@ -12,6 +12,7 @@ import ink.anh.api.lingo.Translator;
 import ink.anh.api.lingo.lang.LanguageManager;
 import ink.anh.api.messages.Logger;
 import ink.anh.shop.lang.LangMessage;
+import ink.anh.shop.sellers.SellersManager;
 import ink.anh.shop.trading.process.TraderManager;
 import net.md_5.bungee.api.ChatColor;
 
@@ -23,6 +24,7 @@ public class GlobalManager extends LibraryManager {
 	
 	private LanguageManager langManager;
 	private TraderManager traderManager;
+	private SellersManager sellersManager;
     private String pluginName;
     private String defaultLang;
     private boolean debug;
@@ -83,6 +85,10 @@ public class GlobalManager extends LibraryManager {
 	public TraderManager getTraderManager() {
 		return traderManager;
 	}
+
+	public SellersManager getSellersManager() {
+		return sellersManager;
+	}
     
     private void loadFields(AnhyShop shopPlugin) {
     	setAnhyLingo();
@@ -91,6 +97,7 @@ public class GlobalManager extends LibraryManager {
         debug = shopPlugin.getConfig().getBoolean("debug", false);
         setLanguageManager();
 	    traderManager = TraderManager.getInstance(shopPlugin);
+	    sellersManager.synchronizeSalersAndTraders(traderManager);
     }
 
     private void saveDefaultConfig() {
@@ -125,6 +132,7 @@ public class GlobalManager extends LibraryManager {
 	            shopPlugin.reloadConfig();
 	            loadFields(shopPlugin);
 	            traderManager.reloadTraders();
+	    	    sellersManager.synchronizeSalersAndTraders(traderManager);
 	            Logger.info(shopPlugin, Translator.translateKyeWorld(instance, "shop_configuration_reloaded" , new String[] {defaultLang}));
 	        } catch (Exception e) {
 	            e.printStackTrace();
