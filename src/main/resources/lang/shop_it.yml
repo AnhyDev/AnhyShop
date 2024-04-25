@@ -50,3 +50,16 @@ shop_err_key_trader_nickname_player: "È necessario specificare la chiave del co
 shop_err_no_player_found_nickname: "Nessun giocatore trovato con tale nickname."
 shop_trade_open_player: "Scambio aperto per il giocatore"
 shop_err_not_possible_open_trade: "Impossibile aprire lo scambio"
+
+# Aggiunto nella versione 1.0.0
+shop_err_command_args: "Argomenti specificati nel comando errati: %s"
+shop_err_save_data_base: "Impossibile salvare le informazioni su '%s' nel database, azione annullata"
+shop_seller_is_created: "Per il venditore %s, impostati gli articoli del commerciante %s"
+shop_err_invalid_number: "La chiave del venditore '%s' fornita non può essere convertita in numero"
+shop_err_missing_arguments: "Questo comando deve avere il seguente formato: %s, aggiungi o correggi gli argomenti"
+shop_err_no_trader_found_key: "Nessun commerciante trovato per la chiave '%s'"
+shop_seller_success_replace_trade: "Per il venditore '%s', articoli del commerciante sostituiti con %s"
+shop_err_seller_not_found: "Venditore non trovato con il numero '%s'"
+shop_err_seller_trade_not_found: "Nessuna transazione trovata per il venditore '%s'"
+shop_hover_click_to_copy: "Clicca per copiare '%s' negli appunti"
+

@@ -50,3 +50,15 @@ shop_err_key_trader_nickname_player: "Necesitas especificar la clave del comerci
 shop_err_no_player_found_nickname: "No se encontró jugador con ese apodo."
 shop_trade_open_player: "Intercambio abierto para el jugador"
 shop_err_not_possible_open_trade: "No se pudo abrir el intercambio"
+
+# Añadido en la versión 1.0.0
+shop_err_command_args: "Argumentos incorrectos especificados en el comando: %s"
+shop_err_save_data_base: "No se pudo guardar información sobre '%s' en la base de datos, acción cancelada"
+shop_seller_is_created: "Para el vendedor %s, establecidos los artículos del comerciante %s"
+shop_err_invalid_number: "La clave de vendedor '%s' proporcionada no se puede convertir en número"
+shop_err_missing_arguments: "Este comando debe tener el siguiente formato: %s, añada o corrija los argumentos"
+shop_err_no_trader_found_key: "No se encontró comerciante para la clave '%s'"
+shop_seller_success_replace_trade: "Para el vendedor '%s', artículos de comerciante reemplazados con %s"
+shop_err_seller_not_found: "No se encontró vendedor con el número '%s'"
+shop_err_seller_trade_not_found: "No se encontraron comercios para el vendedor '%s'"
+shop_hover_click_to_copy: "Haga clic para copiar '%s' al portapapeles"

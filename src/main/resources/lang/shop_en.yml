@@ -50,3 +50,15 @@ shop_err_key_trader_nickname_player: "You need to specify the trader key and pla
 shop_err_no_player_found_nickname: "No player found with such nickname."
 shop_trade_open_player: "Trade opened for player"
 shop_err_not_possible_open_trade: "Failed to open trade"
+
+# Added in version 1.0.0
+shop_err_command_args: "Incorrect arguments specified in command: %s"
+shop_err_save_data_base: "Failed to save information about '%s' in the database, action cancelled"
+shop_seller_is_created: "For seller %s, trader's items %s set"
+shop_err_invalid_number: "The seller key '%s' you provided cannot be converted into a number"
+shop_err_missing_arguments: "This command must have the following format: %s, please add or correct arguments"
+shop_err_no_trader_found_key: "No trader found for key '%s'"
+shop_seller_success_replace_trade: "For seller '%s', trader items replaced with %s"
+shop_err_seller_not_found: "Seller not found with number '%s'"
+shop_err_seller_trade_not_found: "No trades found for seller '%s'"
+shop_hover_click_to_copy: "Click to copy '%s' to clipboard"

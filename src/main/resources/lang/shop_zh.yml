@@ -50,3 +50,16 @@ shop_err_key_trader_nickname_player: "需要指定商人的密钥和玩家的昵
 shop_err_no_player_found_nickname: "未找到具有此昵称的玩家。"
 shop_trade_open_player: "为玩家开放交易"
 shop_err_not_possible_open_trade: "无法开放交易"
+
+# 在1.0.0版本中添加
+shop_err_command_args: "命令中指定的参数错误：%s"
+shop_err_save_data_base: "无法保存有关'%s'的信息到数据库，操作已取消"
+shop_seller_is_created: "为卖家%s设置了交易者%s的商品"
+shop_err_invalid_number: "您提供的卖家密钥'%s'无法转换为数字"
+shop_err_missing_arguments: "该命令必须具有以下格式：%s，请添加或更正参数"
+shop_err_no_trader_found_key: "未找到密钥'%s'的交易者"
+shop_seller_success_replace_trade: "卖家'%s'的商品已更换为交易者%s的商品"
+shop_err_seller_not_found: "未找到编号为'%s'的卖家"
+shop_err_seller_trade_not_found: "卖家'%s'没有交易"
+shop_hover_click_to_copy: "点击复制'%s'到剪贴板"
+

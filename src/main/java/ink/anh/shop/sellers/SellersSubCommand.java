@@ -1,13 +1,15 @@
 package ink.anh.shop.sellers;
 
 import java.util.Map;
-import java.util.stream.Collectors;
-
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import ink.anh.api.messages.MessageChat;
+import ink.anh.api.messages.MessageComponents;
+import ink.anh.api.messages.MessageContext;
 import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;
+import ink.anh.api.messages.Messenger;
 import ink.anh.api.messages.Sender;
 import ink.anh.shop.AnhyShop;
 import ink.anh.shop.sellers.obj.AbstractSeller;
@@ -124,8 +126,12 @@ public class SellersSubCommand extends Sender {
         if (sellerKey == 0) return; // Вже виведено повідомлення про помилку в getSellerKey
 
         AbstractSeller saler = shopPlugin.getGlobalManager().getSellersManager().getSeller(sellerKey);
-        if (saler != null) {
-            sendMessage(new MessageForFormatting("shop_info_details", new String[]{saler.getAdditionalDetails()}), MessageType.NORMAL, sender);
+        if (saler != null && saler.getTrader() != null) {
+        	String copyText = saler.getTrader().getKey();
+        	MessageForFormatting message = new MessageForFormatting("shop_info_details", new String[]{saler.getAdditionalDetails()});
+        	MessageForFormatting hoverText = new MessageForFormatting("shop_hover_click_to_copy", new String[]{copyText});
+        	
+            MessageChat.sendMessageWithCopy(libraryManager, sender, message, hoverText, copyText, MessageType.NORMAL, true);
         } else {
             sendMessage(new MessageForFormatting("shop_err_seller_not_found", new String[]{args[2]}), MessageType.ERROR, sender);
         }
@@ -134,10 +140,38 @@ public class SellersSubCommand extends Sender {
     private void listAllSellers(CommandSender sender, String[] args) {
         Map<Integer, AbstractSeller> sellers = shopPlugin.getGlobalManager().getSellersManager().getAllSalers();
         if (!sellers.isEmpty()) {
-            String sellerDetails = sellers.values().stream()
-                .map(AbstractSeller::getAdditionalDetails)
-                .collect(Collectors.joining("\n"));
-            sendMessage(new MessageForFormatting("shop_list_sellers", new String[]{sellerDetails}), MessageType.NORMAL, sender);
+            // Створення білдера для всіх компонентів
+            MessageComponents.MessageBuilder mBuilder = MessageComponents.builder();
+            StringBuilder consoleMessage = new StringBuilder();
+
+            sellers.values().forEach(seller -> {
+                String additionalDetails = seller.getAdditionalDetails();
+                String copyText = seller.getTrader().getKey();
+                MessageContext context = new MessageContext(libraryManager, sender, new MessageForFormatting("shop_hover_click_to_copy", new String[]{copyText}), false);
+
+
+            	// Створення індивідуального компонента для кожного продавця
+                MessageComponents sellerComponent = MessageComponents.builder()
+                        .content(additionalDetails)
+                        .hoverComponent(context.getmBuilder().build())
+                        .clickActionCopy(copyText)
+                        .appendNewLine() // Додаємо новий рядок після кожного продавця
+                        .build();
+                
+                // Додавання компонента продавця до головного білдера
+                mBuilder.append(sellerComponent);
+
+            	// Додаємо інформацію про продавця до StringBuilder
+                if (consoleMessage.length() > 0) {
+                    consoleMessage.append("\n");  // Додаємо новий рядок перед додаванням наступного продавця
+                }
+                consoleMessage.append(additionalDetails);
+                
+            });
+
+            // Відправлення зібраного мульт-компонента або побудованого рядка
+            Messenger.sendMessage(libraryManager.getPlugin(), sender, mBuilder.build(), consoleMessage.toString());
+
         } else {
             sendMessage(new MessageForFormatting("shop_err_no_sellers", null), MessageType.WARNING, sender);
         }

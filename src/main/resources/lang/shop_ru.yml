@@ -50,3 +50,16 @@ shop_err_key_trader_nickname_player: "Необходимо указать клю
 shop_err_no_player_found_nickname: "Игрок с таким никнеймом не найден."
 shop_trade_open_player: "Торги открыты для игрока"
 shop_err_not_possible_open_trade: "Не удалось открыть торг"
+
+# Добавлено в версии 1.0.0
+shop_err_command_args: "Неверно указаны аргументы в команде: %s"
+shop_err_save_data_base: "Не удалось сохранить информацию о '%s' в базе данных, действие отменено"
+shop_seller_is_created: "Для продавца %s установлены товары торговца %s"
+shop_err_invalid_number: "Указанный ключ продавца '%s' невозможно преобразовать в номер"
+shop_err_missing_arguments: "Эта команда должна иметь следующий формат: %s, добавьте или исправьте аргументы"
+shop_err_no_trader_found_key: "По ключу '%s' торговец не найден"
+shop_seller_success_replace_trade: "У продавца '%s' заменены товары на товары торговца %s"
+shop_err_seller_not_found: "Продавец с номером '%s' не найден"
+shop_err_seller_trade_not_found: "У продавца '%s' торги отсутствуют"
+shop_hover_click_to_copy: "Нажмите, чтобы скопировать '%s' в буфер обмена"
+

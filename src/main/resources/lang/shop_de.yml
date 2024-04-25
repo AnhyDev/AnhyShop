@@ -50,3 +50,18 @@ shop_err_key_trader_nickname_player: "Sie müssen den Händlerschlüssel und den
 shop_err_no_player_found_nickname: "Kein Spieler mit solchem Spitznamen gefunden."
 shop_trade_open_player: "Handel für Spieler geöffnet"
 shop_err_not_possible_open_trade: "Handel konnte nicht geöffnet werden"
+
+# Hinzugefügt in Version 1.0.0
+shop_err_command_args: "Falsche Argumente in Befehl angegeben: %s"
+shop_err_save_data_base: "Speichern der Informationen über '%s' in der Datenbank fehlgeschlagen, Aktion abgebrochen"
+shop_seller_is_created: "Für Verkäufer %s, Händlerartikel %s gesetzt"
+shop_err_invalid_number: "Der angegebene Verkäufer-Schlüssel '%s' kann nicht in eine Zahl umgewandelt werden"
+shop_err_missing_arguments: "Dieser Befehl muss folgendes Format haben: %s, bitte füge oder korrigiere Argumente hinzu"
+shop_err_no_trader_found_key: "Kein Händler für Schlüssel '%s' gefunden"
+shop_seller_success_replace_trade: "Für Verkäufer '%s', Händlerartikel ersetzt mit %s"
+shop_err_seller_not_found: "Verkäufer mit Nummer '%s' nicht gefunden"
+shop_err_seller_trade_not_found: "Keine Handel für Verkäufer '%s' gefunden"
+shop_hover_click_to_copy: "Klicken, um '%s' in die Zwischenablage zu kopieren"
+
+
+
