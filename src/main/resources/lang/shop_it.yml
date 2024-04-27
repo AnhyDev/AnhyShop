@@ -28,7 +28,7 @@ shop_err_enter_name_trader: "Specifica il nome del commerciante."
 shop_new_trader: "Nuovo commerciante "
 shop_created_with_key: "creato con chiave "
 shop_err_no_trader_found_key: "Nessun commerciante trovato con tale chiave."
-shop_removed_merchant_key: "Commerciante rimosso con chiave: "
+shop_removed_merchant_key: "Commerciante rimosso con chiave: %s"
 shop_name_trader_with_key: "Nome del commerciante con chiave"
 shop_name_trader_changed_to: "cambiato in"
 shop_err_no_traders_found: "Nessun commerciante trovato."
@@ -66,5 +66,8 @@ shop_seller_success_remove: "Venditore con chiave '%s' rimosso"
 shop_err_seller_noview_type: "L'obiettivo che stai guardando non può essere un venditore"
 shop_err_no_sellers_found: "Nessun venditore trovato."
 shop_trader_list_info: "&2Commerciante: '&3%s&2', nome: '&3%s&2', numero di commerci: '&3%s&2'"
+shop_removed_merchant2_key: "Commerciante con chiave: %s rimosso. Inoltre, sono stati rimossi anche i venditori associati a questo commerciante: %s"
+shop_err_save_already_exists: "Questo venditore: '&3%s&2', esiste già. Se è necessaria una sostituzione, eliminarlo prima di aggiungerlo."
+
 
 

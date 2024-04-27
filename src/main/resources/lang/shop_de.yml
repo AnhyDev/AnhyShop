@@ -28,7 +28,7 @@ shop_err_enter_name_trader: "Geben Sie den Namen des Händlers an."
 shop_new_trader: "Neuer Händler "
 shop_created_with_key: "erstellt mit Schlüssel "
 shop_err_no_trader_found_key: "Kein Händler mit solchem Schlüssel gefunden."
-shop_removed_merchant_key: "Händler entfernt mit Schlüssel: "
+shop_removed_merchant_key: "Händler entfernt mit Schlüssel: %s"
 shop_name_trader_with_key: "Name des Händlers mit Schlüssel"
 shop_name_trader_changed_to: "geändert zu"
 shop_err_no_traders_found: "Keine Händler gefunden."
@@ -66,7 +66,8 @@ shop_seller_success_remove: "Verkäufer mit Schlüssel '%s' entfernt"
 shop_err_seller_noview_type: "Das Ziel, das Sie betrachten, kann kein Verkäufer sein"
 shop_err_no_sellers_found: "Keine Verkäufer gefunden."
 shop_trader_list_info: "&2Händler: '&3%s&2', Name: '&3%s&2', Anzahl der Handel: '&3%s&2'"
-
+shop_removed_merchant2_key: "Händler mit Schlüssel: %s entfernt. Zusätzlich wurden auch mit diesem Händler verbundene Verkäufer entfernt: %s"
+shop_err_save_already_exists: "Dieser Verkäufer: '&3%s&2', existiert bereits. Falls ein Ersatz erforderlich ist, bitte zuerst löschen."
 
 
 

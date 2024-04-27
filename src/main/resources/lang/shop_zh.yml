@@ -28,7 +28,7 @@ shop_err_enter_name_trader: "请输入商人的名字。"
 shop_new_trader: "新商人 "
 shop_created_with_key: "已使用密钥创建 "
 shop_err_no_trader_found_key: "未找到具有该密钥的商人。"
-shop_removed_merchant_key: "已移除具有密钥的商人："
+shop_removed_merchant_key: "已移除具有密钥的商人：%s"
 shop_name_trader_with_key: "具有密钥的商人名称"
 shop_name_trader_changed_to: "更改为"
 shop_err_no_traders_found: "未找到商人。"
@@ -66,5 +66,8 @@ shop_seller_success_remove: "已移除拥有密钥 '%s' 的卖家"
 shop_err_seller_noview_type: "您正在查看的目标不能成为卖家"
 shop_err_no_sellers_found: "未找到卖家。"
 shop_trader_list_info: "&2交易者：'&3%s&2'，姓名：'&3%s&2'，交易数量：'&3%s&2'"
+shop_removed_merchant2_key: "已删除具有键值：%s 的商人。同时也删除了与该商人关联的销售者：%s"
+shop_err_save_already_exists: "此销售者：'&3%s&2'，已经存在。如果需要替换，请在添加前先删除它。"
+
 
 

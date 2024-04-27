@@ -76,7 +76,7 @@ public class TraderCreator extends Sender {
                 .collect(Collectors.joining(", "));
             sendMessage(new MessageForFormatting("shop_removed_merchant2_key", new String[] {key, removedKeysString}), MessageType.NORMAL, sender);
         } else {
-            sendMessage(new MessageForFormatting("shop_removed_merchant_key %s", new String[] {key}), MessageType.NORMAL, sender);
+            sendMessage(new MessageForFormatting("shop_removed_merchant_key", new String[] {key}), MessageType.NORMAL, sender);
         }
 
         return true;

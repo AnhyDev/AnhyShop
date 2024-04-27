@@ -28,7 +28,7 @@ shop_err_enter_name_trader: "Укажите имя торговца."
 shop_new_trader: "Новый торговец "
 shop_created_with_key: "создан с ключом "
 shop_err_no_trader_found_key: "Торговец с таким ключом не найден."
-shop_removed_merchant_key: "Удален торговец с ключом: "
+shop_removed_merchant_key: "Удален торговец с ключом: %s"
 shop_name_trader_with_key: "Имя торговца с ключом"
 shop_name_trader_changed_to: "изменено на"
 shop_err_no_traders_found: "Торговцы не найдены."
@@ -66,5 +66,8 @@ shop_seller_success_remove: "Продавец с ключом '%s' удален"
 shop_err_seller_noview_type: "Цель, на которую вы смотрите, не может быть продавцом"
 shop_err_no_sellers_found: "Продавцы не найдены."
 shop_trader_list_info: "&2Торговец: '&3%s&2', имя: '&3%s&2', количество сделок: '&3%s&2'"
+shop_removed_merchant2_key: "Торговец с ключом: %s удален. Также были удалены продавцы, связанные с этим торговцем: %s"
+shop_err_save_already_exists: "Данный продавец: '&3%s&2', уже существует. Если необходимо заменить, удалите его перед добавлением."
+
 
 
