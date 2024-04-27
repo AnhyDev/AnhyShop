@@ -37,15 +37,15 @@ public class SellersManager {
         return instance;
     }
 
-    public int addSaler(AbstractSeller saler) {
-    	int key = saler.hashCode();
+    public int addSeller(AbstractSeller seller) {
+    	int key = seller.hashCode();
     	int result = 0;
-        if (sellerList.putIfAbsent(key, saler) == null) {
+        if (sellerList.putIfAbsent(key, seller) == null) {
             try {
-                db.saveSeller(saler);
+                db.saveSeller(seller);
                 result = 1;
             } catch (Exception e) {
-                shopPlugin.getLogger().log(Level.SEVERE, "Error adding saler to database", e);
+                shopPlugin.getLogger().log(Level.SEVERE, "Error adding seller to database", e);
                 // Optionally rollback if necessary
                 sellerList.remove(key);
                 result = 2;
@@ -57,15 +57,15 @@ public class SellersManager {
     public int replaceTrader(int key, Trader trader) {
         int result = 0;  // Ініціалізуємо результат як 0, що позначає, що ключ не був знайдений
         Trader oldTrader = getTrader(key);
-        AbstractSeller oldSaler = sellerList.get(key);
-        if (oldSaler != null) {
-        	oldSaler.setTrader(trader);
+        AbstractSeller oldSeller = sellerList.get(key);
+        if (oldSeller != null) {
+        	oldSeller.setTrader(trader);
             try {
-                db.saveSeller(oldSaler); // Спроба зберегти нового продавця в базу даних
+                db.saveSeller(oldSeller); // Спроба зберегти нового продавця в базу даних
                 result = 1; // Заміна відбулася успішно і дані оновлені в базі даних
             } catch (Exception e) {
-                shopPlugin.getLogger().log(Level.SEVERE, "Error updating saler in the database", e);
-                oldSaler.setTrader(oldTrader); // Відкат до попереднього продавця, якщо оновлення бази даних не вдалося
+                shopPlugin.getLogger().log(Level.SEVERE, "Error updating seller in the database", e);
+                oldSeller.setTrader(oldTrader); // Відкат до попереднього продавця, якщо оновлення бази даних не вдалося
                 result = 2; // Заміна не вдалася через помилку бази даних
             }
         }
@@ -74,15 +74,15 @@ public class SellersManager {
 
     public int removeSeller(int key) {
         int result = 0;
-        AbstractSeller saler = sellerList.remove(key);
-        if (saler != null) {
+        AbstractSeller seller = sellerList.remove(key);
+        if (seller != null) {
             try {
                 db.deleteSeller(key);
                 result = 1;
             } catch (Exception e) {
-                shopPlugin.getLogger().log(Level.SEVERE, "Error removing saler from database", e);
+                shopPlugin.getLogger().log(Level.SEVERE, "Error removing seller from database", e);
                 // Optionally rollback if necessary
-                sellerList.put(key, saler);
+                sellerList.put(key, seller);
                 result = 2;
             }
         }
@@ -117,27 +117,33 @@ public class SellersManager {
         return sellerList.get(key).getTrader();
     }
 
-    public Map<Integer, AbstractSeller> getAllSalers() {
+    public Map<Integer, AbstractSeller> getAllSellers() {
         return new ConcurrentHashMap<>(sellerList);
     }
 
-    public void synchronizeSalersAndTraders(TraderManager traderManager) {
+    public void synchronizeSellersAndTraders(TraderManager traderManager) {
         sellerList = new ConcurrentHashMap<>();
         Map<Integer, AbstractSeller> salers = db.getSellers();
-        
+
         // Додаємо або оновлюємо трейдерів
-        salers.forEach((key, saler) -> {
-            Trader trader = traderManager.getTrader(saler.getTrader().getKey());
-            if (trader != null) {
-                saler.setTrader(trader);
-                sellerList.put(key, saler);
-            } else {
-                try {
-                    db.deleteSeller(key);
-                } catch (Exception e) {
-                    shopPlugin.getLogger().log(Level.SEVERE, "Error removing saler from database due to missing trader", e);
+        salers.forEach((key, seller) -> {
+        	if (seller != null) {
+        		String traderKey = seller.getTrader() != null ? seller.getTrader().getKey() : null;
+        		Trader trader = traderKey != null ? traderManager.getTrader(traderKey) : null;
+        		
+                //Logger.warn(shopPlugin, "AbstractSeller: " + seller.hashCode() + ", traderKey = " + traderKey + ", trader != null " + (trader != null));
+                
+                if (trader != null) {
+                    seller.setTrader(trader);
+                    sellerList.put(key, seller);
+                } else {
+                    try {
+                        //db.deleteSeller(key);
+                    } catch (Exception e) {
+                        shopPlugin.getLogger().log(Level.SEVERE, "Error removing seller from database due to missing trader", e);
+                    }
                 }
-            }
+        	}
         });
     }
 }

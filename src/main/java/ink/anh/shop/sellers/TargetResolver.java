@@ -31,7 +31,7 @@ public class TargetResolver extends Sender {
     	this.shopPlugin = shopPlugin;
 	}
 
-    public boolean addSaler(CommandSender sender, String[] args) {
+    public boolean addSeller(CommandSender sender, String[] args) {
         if (args.length == 2) {
             sendMessage(new MessageForFormatting("shop_err_missing_arguments", new String[] {"/shop seller add <trader_key>"}), MessageType.WARNING, sender);
             return true;
@@ -45,6 +45,10 @@ public class TargetResolver extends Sender {
     
     public boolean interimMethod(Player player, String traderKey) {
     	AbstractSeller saler = resolveTarget(player);
+    	if (saler == null) {
+            sendMessage(new MessageForFormatting("shop_err_seller_noview_type", null), MessageType.WARNING, player);
+    		return false;
+    	}
     	Trader trader = shopPlugin.getGlobalManager().getTraderManager().getTrader(traderKey);
     	
     	if (trader == null) {
@@ -55,7 +59,7 @@ public class TargetResolver extends Sender {
     	saler.setTrader(trader);
     	
     	SellersManager sellersManager = shopPlugin.getGlobalManager().getSellersManager();
-    	int result = sellersManager.addSaler(saler);
+    	int result = sellersManager.addSeller(saler);
     	
 		if (result == 1) {
             sendMessage(new MessageForFormatting("shop_seller_is_created", 
@@ -71,23 +75,28 @@ public class TargetResolver extends Sender {
     }
     
     private AbstractSeller resolveTarget(Player player) {
-        // Виконуємо ray tracing для знаходження цілі з максимальною дистанцією 5 блоків
-        RayTraceResult rayTraceResult = player.rayTraceBlocks(MAX_DISTANCE);
-        if (rayTraceResult != null) {
-            if (rayTraceResult.getHitEntity() != null) {
-                Entity entity = rayTraceResult.getHitEntity();
-                return createSalerFromEntity(entity);
-            } else if (rayTraceResult.getHitBlock() != null) {
-                Block block = rayTraceResult.getHitBlock();
-                if (block.getLocation().distance(player.getLocation()) <= MAX_DISTANCE) {
-                    return createSalerFromBlock(block);
-                }
-            }
+        // Спочатку спробуємо знайти сутність
+        RayTraceResult rayTraceEntitiesResult = player.getWorld().rayTraceEntities(
+            player.getEyeLocation(),
+            player.getEyeLocation().getDirection(),
+            MAX_DISTANCE,
+            entity -> entity instanceof LivingEntity && entity != player
+        );
+
+        if (rayTraceEntitiesResult != null && rayTraceEntitiesResult.getHitEntity() != null) {
+            return createSellerFromEntity(rayTraceEntitiesResult.getHitEntity());
         }
+
+        // Якщо сутність не була знайдена, тоді спробуємо знайти блок
+        RayTraceResult rayTraceBlocksResult = player.rayTraceBlocks(MAX_DISTANCE);
+        if (rayTraceBlocksResult != null && rayTraceBlocksResult.getHitBlock() != null) {
+            return createSellerFromBlock(rayTraceBlocksResult.getHitBlock());
+        }
+
         return null;
     }
 
-    private AbstractSeller createSalerFromEntity(Entity entity) {
+    private AbstractSeller createSellerFromEntity(Entity entity) {
         if (entity instanceof LivingEntity) {
             LivingEntity livingEntity = (LivingEntity) entity;
             if (livingEntity.getCustomName() != null && !livingEntity.getCustomName().isEmpty()) {
@@ -102,9 +111,12 @@ public class TargetResolver extends Sender {
         return null;
     }
 
-    private AbstractSeller createSalerFromBlock(Block block) {
+    private AbstractSeller createSellerFromBlock(Block block) {
         Material material = block.getType();
-        SellerType type = handleSalerType(material);
+        SellerType type = handleSellerType(material);
+        
+        if (type == null) return null;
+        
         switch (type) {
             case SIGN:
                 BlockData blockData = block.getBlockData();
@@ -126,7 +138,7 @@ public class TargetResolver extends Sender {
         return null;
     }
 
-    private SellerType handleSalerType(Material material) {
+    private SellerType handleSellerType(Material material) {
         String materialName = material.toString();
         int lastIndex = materialName.lastIndexOf('_');
         String endsWith = (lastIndex != -1) ? materialName.substring(lastIndex + 1) : materialName;

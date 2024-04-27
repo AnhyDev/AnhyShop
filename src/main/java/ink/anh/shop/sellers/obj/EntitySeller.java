@@ -15,6 +15,7 @@ public class EntitySeller extends AbstractSeller {
         this.sellerType = SellerType.ENTITY;
         this.entity = entity;
         this.customName = customName;
+        setSerializeKey();
     }
 
     @Override
@@ -45,6 +46,8 @@ public class EntitySeller extends AbstractSeller {
 
     public static EntitySeller deserialize(String serializedData) {
         Gson gson = new Gson();
-        return gson.fromJson(serializedData, EntitySeller.class);
+        EntitySeller seller = gson.fromJson(serializedData, EntitySeller.class);
+        seller.setSerializeKey();
+        return seller;
     }
 }

@@ -68,7 +68,7 @@ public class SQLite extends Database{
 /* 1*/            	+ "`key` INTEGER NOT NULL UNIQUE,"
 /* 2*/            	+ "`trader` TEXT,"
 /* 3*/            	+ "`type` TEXT,"
-/* 4*/            	+ "`saler` TEXT, PRIMARY KEY (`key`));");
+/* 4*/            	+ "`seller` TEXT, PRIMARY KEY (`key`));");
 
             s.close();
             s.close();

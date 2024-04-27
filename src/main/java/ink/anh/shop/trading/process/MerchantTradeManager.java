@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import ink.anh.api.lingo.Translator;
 import ink.anh.api.messages.MessageComponents;
 import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;
@@ -261,18 +262,33 @@ public class MerchantTradeManager extends Sender {
             return true;
         }
 
+        MessageBuilder mBuilder = MessageComponents.builder();
+        StringBuilder consoleMessage = new StringBuilder();
+        
         for (Trader trader : traders) {
-            String message = String.format(translate(sender, "shop_trader_key %s, shop_trader_name %s, shop_number_trades %d"), 
-            		trader.getKey(), trader.getName(), trader.getTrades().size());
-            MessageBuilder mBuilder = MessageComponents.builder();
-            mBuilder.content(message)
-                    .hexColor(MessageType.NORMAL.getColor(true))
-                    .hoverMessage(trader.getKey())
-                    .clickActionCopy(trader.getKey())
-                    .build();
+        	String traderKey = trader.getKey();
+        	
+            String hoverMessage = StringUtils.formatString(Translator.translateKyeWorld(libraryManager, "shop_hover_click_to_copy", langs), new String[] {traderKey});
 
-            Messenger.sendMessage(shopPlugin, sender, mBuilder.build(), message);
+            String traderName = Translator.translateKyeWorld(libraryManager, trader.getName(), langs);
+            String message = StringUtils.formatString(Translator.translateKyeWorld(libraryManager, "shop_trader_list_info", langs),
+            		new String[]{traderKey, traderName, String.valueOf(trader.getTrades().size())});
+            
+            MessageComponents traderComponent = MessageComponents.builder()
+            		.content(message)
+                    .hexColor(MessageType.NORMAL.getColor(true))
+                    .hoverMessage(hoverMessage)
+                    .clickActionCopy(traderKey)
+                    .appendNewLine()
+                    .build();
+            mBuilder.append(traderComponent);
+
+            if (consoleMessage.length() > 0) {
+                consoleMessage.append("\n");
+            }
+            consoleMessage.append(message);
         }
+        Messenger.sendMessage(shopPlugin, sender, mBuilder.build(), consoleMessage.toString());
         return true;
     }
 

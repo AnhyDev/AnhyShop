@@ -61,5 +61,10 @@ shop_err_no_trader_found_key: "По ключу '%s' торговец не най
 shop_seller_success_replace_trade: "У продавца '%s' заменены товары на товары торговца %s"
 shop_err_seller_not_found: "Продавец с номером '%s' не найден"
 shop_err_seller_trade_not_found: "У продавца '%s' торги отсутствуют"
-shop_hover_click_to_copy: "Нажмите, чтобы скопировать '%s' в буфер обмена"
+shop_hover_click_to_copy: "&2Нажмите, чтобы скопировать '&3%s&2' в буфер обмена"
+shop_seller_success_remove: "Продавец с ключом '%s' удален"
+shop_err_seller_noview_type: "Цель, на которую вы смотрите, не может быть продавцом"
+shop_err_no_sellers_found: "Продавцы не найдены."
+shop_trader_list_info: "&2Торговец: '&3%s&2', имя: '&3%s&2', количество сделок: '&3%s&2'"
+
 

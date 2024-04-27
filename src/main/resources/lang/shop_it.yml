@@ -61,5 +61,10 @@ shop_err_no_trader_found_key: "Nessun commerciante trovato per la chiave '%s'"
 shop_seller_success_replace_trade: "Per il venditore '%s', articoli del commerciante sostituiti con %s"
 shop_err_seller_not_found: "Venditore non trovato con il numero '%s'"
 shop_err_seller_trade_not_found: "Nessuna transazione trovata per il venditore '%s'"
-shop_hover_click_to_copy: "Clicca per copiare '%s' negli appunti"
+shop_hover_click_to_copy: "&2Clicca per copiare '&3%s&2' negli appunti"
+shop_seller_success_remove: "Venditore con chiave '%s' rimosso"
+shop_err_seller_noview_type: "L'obiettivo che stai guardando non può essere un venditore"
+shop_err_no_sellers_found: "Nessun venditore trovato."
+shop_trader_list_info: "&2Commerciante: '&3%s&2', nome: '&3%s&2', numero di commerci: '&3%s&2'"
+
 

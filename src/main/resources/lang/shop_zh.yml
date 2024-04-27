@@ -61,5 +61,10 @@ shop_err_no_trader_found_key: "未找到密钥'%s'的交易者"
 shop_seller_success_replace_trade: "卖家'%s'的商品已更换为交易者%s的商品"
 shop_err_seller_not_found: "未找到编号为'%s'的卖家"
 shop_err_seller_trade_not_found: "卖家'%s'没有交易"
-shop_hover_click_to_copy: "点击复制'%s'到剪贴板"
+shop_hover_click_to_copy: "&2点击复制 '&3%s&2' 到剪贴板"
+shop_seller_success_remove: "已移除拥有密钥 '%s' 的卖家"
+shop_err_seller_noview_type: "您正在查看的目标不能成为卖家"
+shop_err_no_sellers_found: "未找到卖家。"
+shop_trader_list_info: "&2交易者：'&3%s&2'，姓名：'&3%s&2'，交易数量：'&3%s&2'"
+
 

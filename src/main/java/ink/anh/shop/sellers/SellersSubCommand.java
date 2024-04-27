@@ -4,17 +4,21 @@ import java.util.Map;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import ink.anh.api.lingo.Translator;
 import ink.anh.api.messages.MessageChat;
 import ink.anh.api.messages.MessageComponents;
-import ink.anh.api.messages.MessageContext;
 import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Messenger;
 import ink.anh.api.messages.Sender;
+import ink.anh.api.utils.StringUtils;
 import ink.anh.shop.AnhyShop;
+import ink.anh.shop.GlobalManager;
+import ink.anh.shop.Permissions;
 import ink.anh.shop.sellers.obj.AbstractSeller;
 import ink.anh.shop.trading.Trader;
 import ink.anh.shop.trading.VirtualVillager;
+import ink.anh.shop.utils.OtherUtils;
 
 public class SellersSubCommand extends Sender {
 
@@ -33,13 +37,10 @@ public class SellersSubCommand extends Sender {
 
         switch (args[1].toLowerCase()) {
             case "add":
-                new TargetResolver(shopPlugin).addSaler(sender, args);
+                new TargetResolver(shopPlugin).addSeller(sender, args);
                 break;
             case "remove":
                 removeSeller(sender, args);
-                break;
-            case "replace":
-                replaceSeller(sender, args);
                 break;
             case "open":
                 openSellerShop(sender, args);
@@ -63,7 +64,7 @@ public class SellersSubCommand extends Sender {
 
         int result = shopPlugin.getGlobalManager().getSellersManager().removeSeller(sellerKey);
         if (result == 1) {
-            sendMessage(new MessageForFormatting("shop_success_remove", new String[]{args[2]}), MessageType.NORMAL, sender);
+            sendMessage(new MessageForFormatting("shop_seller_success_remove", new String[]{args[2]}), MessageType.NORMAL, sender);
         } else if (result ==  0) {
             sendMessage(new MessageForFormatting("shop_err_seller_not_found", new String[]{args[2]}), MessageType.WARNING, sender);
         } else if (result ==  2) {
@@ -71,7 +72,7 @@ public class SellersSubCommand extends Sender {
         }
     }
 
-    private void replaceSeller(CommandSender sender, String[] args) {
+    void replaceSeller(CommandSender sender, String[] args) {
         if (args.length < 4) {
             sendMessage(new MessageForFormatting("shop_err_command_format %s ", new String[]{"/shop seller replace <seller_number> <new_trader_key>"}), MessageType.WARNING, sender);
             return;
@@ -100,11 +101,11 @@ public class SellersSubCommand extends Sender {
         int sellerKey = getSellerKey(sender, args);
         if (sellerKey == 0) return; // Вже виведено повідомлення про помилку в getSellerKey
 
-        AbstractSeller saler = shopPlugin.getGlobalManager().getSellersManager().getSeller(sellerKey);
+        GlobalManager globalManager = shopPlugin.getGlobalManager();
+        AbstractSeller saler = globalManager.getSellersManager().getSeller(sellerKey);
         if (saler != null && sender instanceof Player) {
         	
-
-            Trader trader = shopPlugin.getGlobalManager().getSellersManager().getTrader(saler.hashCode());
+            Trader trader = saler.getTrader();
 
             if (trader == null || trader.getTrades() == null || trader.getTrades().isEmpty()) {
                 sendMessage(new MessageForFormatting("shop_err_seller_trade_not_found", new String[]{args[2]}), MessageType.ERROR, sender);
@@ -138,24 +139,39 @@ public class SellersSubCommand extends Sender {
     }
 
     private void listAllSellers(CommandSender sender, String[] args) {
-        Map<Integer, AbstractSeller> sellers = shopPlugin.getGlobalManager().getSellersManager().getAllSalers();
+    	
+    	String[] langs = OtherUtils.checkPlayerPermissions(sender, Permissions.TRADE_VIEW);
+	    if (langs != null && langs[0] == null) {
+            return;
+	    }
+        
+        Map<Integer, AbstractSeller> sellers = shopPlugin.getGlobalManager().getSellersManager().getAllSellers();
         if (!sellers.isEmpty()) {
             // Створення білдера для всіх компонентів
             MessageComponents.MessageBuilder mBuilder = MessageComponents.builder();
             StringBuilder consoleMessage = new StringBuilder();
 
-            sellers.values().forEach(seller -> {
-                String additionalDetails = seller.getAdditionalDetails();
-                String copyText = seller.getTrader().getKey();
-                MessageContext context = new MessageContext(libraryManager, sender, new MessageForFormatting("shop_hover_click_to_copy", new String[]{copyText}), false);
-
+            sellers.entrySet().forEach(entry -> {
+            	AbstractSeller seller = entry.getValue();
+                String sellerID = String.valueOf(entry.getKey());
+                String traderKey = seller.getTrader().getKey();
+                String sellerDetails = "ID: " + seller.hashCode() + ", " + seller.getAdditionalDetails() + ". ";
+                String traderDetails = "Trader: " + traderKey;
+                
+                String sellerHover = StringUtils.formatString(Translator.translateKyeWorld(libraryManager, "shop_hover_click_to_copy", langs), new String[] {sellerID});
+                String traderHover = StringUtils.formatString(Translator.translateKyeWorld(libraryManager, "shop_hover_click_to_copy", langs), new String[] {traderKey});
 
             	// Створення індивідуального компонента для кожного продавця
                 MessageComponents sellerComponent = MessageComponents.builder()
-                        .content(additionalDetails)
-                        .hoverComponent(context.getmBuilder().build())
-                        .clickActionCopy(copyText)
-                        .appendNewLine() // Додаємо новий рядок після кожного продавця
+                        .content(sellerDetails)
+                        .hexColor(MessageType.NORMAL.getColor(true))
+                        .hoverMessage(sellerHover)
+                        .clickActionCopy(sellerID)
+                        .content(traderDetails)
+                        .hexColor(MessageType.ESPECIALLY.getColor(true))
+                        .hoverMessage(traderHover)
+                        .clickActionCopy(traderKey)
+                        .appendNewLine()
                         .build();
                 
                 // Додавання компонента продавця до головного білдера
@@ -165,7 +181,8 @@ public class SellersSubCommand extends Sender {
                 if (consoleMessage.length() > 0) {
                     consoleMessage.append("\n");  // Додаємо новий рядок перед додаванням наступного продавця
                 }
-                consoleMessage.append(additionalDetails);
+                consoleMessage.append(sellerDetails);
+                consoleMessage.append(traderDetails);
                 
             });
 
@@ -173,7 +190,7 @@ public class SellersSubCommand extends Sender {
             Messenger.sendMessage(libraryManager.getPlugin(), sender, mBuilder.build(), consoleMessage.toString());
 
         } else {
-            sendMessage(new MessageForFormatting("shop_err_no_sellers", null), MessageType.WARNING, sender);
+            sendMessage(new MessageForFormatting("shop_err_no_sellers_found", null), MessageType.WARNING, sender);
         }
     }
 

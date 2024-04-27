@@ -17,6 +17,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.block.Action;
+
 import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
@@ -40,21 +41,22 @@ public class InteractionListener extends Sender implements Listener {
     	
     	Player player = event.getPlayer();
         if (event.getRightClicked() instanceof LivingEntity) {
+            SellersManager sellers = shopPlugin.getGlobalManager().getSellersManager();
         	LivingEntity entity = (LivingEntity) event.getRightClicked();
-            AbstractSeller saler = null;
+            AbstractSeller seller = null;
         	if (entity.getCustomName() != null && !entity.getCustomName().isEmpty()) {
         		String name = entity.getCustomName();
         		EntityType entityType = entity.getType();
-        		saler = new EntitySeller(entityType, name);
+            	seller = sellers.getSeller(new EntitySeller(entityType, name).hashCode());
         	} else if (entity instanceof Villager) {
                 Villager villager = (Villager) entity;
-                saler = new VillagerSeller(villager.getProfession(), villager.getVillagerLevel());
+            	seller = sellers.getSeller(new VillagerSeller(villager.getProfession(), villager.getVillagerLevel()).hashCode());
             } else if (entity instanceof WanderingTrader) {
-            	saler = new VillagerSeller();
+            	seller = sellers.getSeller(new VillagerSeller().hashCode());
             }
             
-            if (saler != null) {
-        		event.setCancelled(openTrade(player, saler));
+            if (seller != null) {
+        		event.setCancelled(openTrade(player, seller));
             }
         }
     }
@@ -67,9 +69,14 @@ public class InteractionListener extends Sender implements Listener {
         	if (block == null) return;
 
             Material material = block.getType();
-            AbstractSeller saler = null;
+            AbstractSeller seller = null;
 
-            SellerType type = handleSalerType(material);
+            SellerType type = handlesellerType(material);
+            
+            if (type == null) return; 
+            
+            SellersManager sellers = shopPlugin.getGlobalManager().getSellersManager();
+            
             switch (type) {
                 case SIGN:
                     BlockData blockData = block.getBlockData();
@@ -78,25 +85,33 @@ public class InteractionListener extends Sender implements Listener {
                         Sign sign = (Sign) block.getState();
                         @SuppressWarnings("deprecation")
 						String[] signTexts = sign.getLines();
-                        saler = new SignSeller(signTexts);
+                        SignSeller tempSeller = new SignSeller(signTexts);
+                        int key = tempSeller.hashCode();
+                        //Logger.warn(shopPlugin, "SignSeller: " + tempSeller.getSerializeKey() + "\n HashCode: " + tempSeller.hashCode());
+                        seller = sellers.getSeller(key);
                     }
                     break;
                 case BUTTON:
                 case LEVER:
                 case DOOR:
                 	Location loc = block.getLocation();
-                	saler = new MechanicalSeller(type, loc);
+
+                	MechanicalSeller tempSeller = new MechanicalSeller(type, loc);
+                    int key = tempSeller.hashCode();
+                    //Logger.warn(shopPlugin, "MechanicalSeller: " + tempSeller.getSerializeKey() + "\n HashCode: " + tempSeller.hashCode());
+                    
+                	seller = sellers.getSeller(key);;
 			default:
 				break;
             }
             
-            if (saler != null) {
-        		event.setCancelled(openTrade(player, saler));
+            if (seller != null && seller.getTrader() != null) {
+        		event.setCancelled(openTrade(player, seller));
             }
         }
     }
 
-    private SellerType handleSalerType(Material material) {
+    private SellerType handlesellerType(Material material) {
     	SellerType type = null;
     	
     	if (material == null) {
@@ -126,8 +141,8 @@ public class InteractionListener extends Sender implements Listener {
 		return type;
     }
     
-    private boolean openTrade(Player player, AbstractSeller saler) {
-        Trader trader = shopPlugin.getGlobalManager().getSellersManager().getTrader(saler.hashCode());
+    private boolean openTrade(Player player, AbstractSeller seller) {
+        Trader trader = shopPlugin.getGlobalManager().getSellersManager().getTrader(seller.hashCode());
 
         if (trader == null || trader.getTrades() == null || trader.getTrades().isEmpty()) {
             return false;  // Не скасовуємо стандартну взаємодію, бо торгівля не можлива

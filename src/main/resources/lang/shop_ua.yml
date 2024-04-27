@@ -59,7 +59,11 @@ shop_err_invalid_number: "Вказаний вами ключ продавця '%
 shop_err_missing_arguments: "Дана команда повинна мати наступний формат: %s, додайте або виправте аргументи"
 shop_err_no_trader_found_key: "За ключем '%s' торговець не знайдений"
 shop_seller_success_replace_trade: "У продавця '%s' замінено товари на трейдера %s"
-shop_err_seller_not_found: "Зa номером '%s' продавець не знайдено"
+shop_err_seller_not_found: "Зa ключем '%s' продавець не знайдений"
 shop_err_seller_trade_not_found: "У продавця '%s' торги відсутні"
-shop_hover_click_to_copy: "Натисніть для копіюванні '%s' в буфер обміну"
+shop_hover_click_to_copy: "&2Натисніть для копіювання '&3%s&2' в буфер обміну"
+shop_seller_success_remove: "За ключем '%s' продавець видалений"
+shop_err_seller_noview_type: "Ціль, на яку ви дивитеся не може бути продавцем"
+shop_err_no_sellers_found: "Продавців не знайдено."
+shop_trader_list_info: "&2Торговець: '&3%s&2', ім'я: '&3%s&2', кількість торгів: '&3%s&2'"
 

@@ -20,11 +20,13 @@ public class VillagerSeller extends AbstractSeller {
         this.entityType = EntityType.VILLAGER;
         this.profession = profession;
         this.level = level;
+        setSerializeKey();
     }
 
     public VillagerSeller() {
         this.sellerType = SellerType.WANDERING_TRADER;
         this.entityType = EntityType.WANDERING_TRADER;
+        setSerializeKey();
     }
 
     @Override
@@ -55,6 +57,8 @@ public class VillagerSeller extends AbstractSeller {
 
     public static VillagerSeller deserialize(String serializedData) {
         Gson gson = new Gson();
-        return gson.fromJson(serializedData, VillagerSeller.class);
+        VillagerSeller seller = gson.fromJson(serializedData, VillagerSeller.class);
+        seller.setSerializeKey();
+        return seller;
     }
 }

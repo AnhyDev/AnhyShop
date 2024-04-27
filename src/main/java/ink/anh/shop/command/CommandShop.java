@@ -28,9 +28,14 @@ public class CommandShop extends Sender implements CommandExecutor {
         if (args.length > 0) {
 
             switch (args[0].toLowerCase()) {
+            case "newtrader":
             case "newt":
+            case "new":
             	return new TraderCreator(shopPlugin).createTrader(sender, args);
+            case "deltrader":
+            case "delete":
             case "delt":
+            case "del":
             	return new TraderCreator(shopPlugin).deleteTrader(sender, args);
             case "add":
             	return new MerchantTradeManager(shopPlugin).addTrade(sender, args);

@@ -12,6 +12,7 @@ public class SignSeller extends AbstractSeller {
     public SignSeller(String[] signTexts) {
         this.sellerType = SellerType.SIGN;
         this.signTexts = signTexts;
+        setSerializeKey();
     }
 
     @Override
@@ -31,7 +32,7 @@ public class SignSeller extends AbstractSeller {
 
     @Override
     public String getAdditionalDetails() {
-        return "SignTexts: " + String.join(" | ", signTexts);
+        return "SignTexts: " + String.join("|", signTexts);
     }
 
     @Override
@@ -42,6 +43,8 @@ public class SignSeller extends AbstractSeller {
 
     public static SignSeller deserialize(String serializedData) {
         Gson gson = new Gson();
-        return gson.fromJson(serializedData, SignSeller.class);
+        SignSeller seller = gson.fromJson(serializedData, SignSeller.class);
+        seller.setSerializeKey();
+        return seller;
     }
 }

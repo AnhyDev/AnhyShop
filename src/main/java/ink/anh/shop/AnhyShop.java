@@ -46,7 +46,7 @@ public class AnhyShop extends JavaPlugin {
 	            return;
 	        }
 	        String version = anhyLibAPI.getDescription().getVersion();
-	        if (compareVersion(version, "1.5.3") < 0) {
+	        if (compareVersion(version, "1.5.2") < 0) {
 	            getLogger().severe("AnhyLibAPI version is too old. Current version: " + version + ". Required version: 1.5.2 or newer. The AnhyShop plugin will be disabled.");
 	            getServer().getPluginManager().disablePlugin(this);
 	            return;

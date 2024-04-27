@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,7 @@ import ink.anh.shop.sellers.obj.EntitySeller;
 import ink.anh.shop.sellers.obj.MechanicalSeller;
 import ink.anh.shop.sellers.obj.SellerType;
 import ink.anh.shop.sellers.obj.SignSeller;
+import ink.anh.shop.sellers.obj.VillagerSeller;
 import ink.anh.shop.trading.Trader;
 
 public class SQLiteSellers extends SQLite {
@@ -24,18 +26,18 @@ public class SQLiteSellers extends SQLite {
         super(instance);
     }
 
-    public void saveSeller(AbstractSeller saler) {
-    	Trader trader = saler.getTrader();
+    public void saveSeller(AbstractSeller seller) {
+    	Trader trader = seller.getTrader();
     	if (trader == null) return;
     	String traderKey = trader.getKey();
-    	int key = saler.hashCode();
-    	String sql = "INSERT OR REPLACE INTO sellerList (key, trader, type, saler) VALUES (?, ?, ?, ?)";
+    	int key = seller.hashCode();
+    	String sql = "INSERT OR REPLACE INTO sellerList (key, trader, type, seller) VALUES (?, ?, ?, ?)";
         try (Connection conn = getSQLConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, key);
             ps.setString(2, traderKey);
-            ps.setString(3, saler.getSellerType().getName());
-            ps.setString(4, saler.serialize());
+            ps.setString(3, seller.getSellerType().getName());
+            ps.setString(4, seller.getSerializeKey());
             int affectedRows = ps.executeUpdate();
             if (affectedRows > 0) {
                 shopPlugin.getServer().getLogger().info("Seller added to database with key: " + key);
@@ -87,7 +89,7 @@ public class SQLiteSellers extends SQLite {
 
     public Map<Integer, AbstractSeller> getSellers() {
         Map<Integer, AbstractSeller> sellers = new HashMap<>();
-        String sql = "SELECT key, trader FROM sellerList;";
+        String sql = "SELECT key, trader, type, seller FROM sellerList;";
         try (Connection conn = getSQLConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
@@ -95,8 +97,8 @@ public class SQLiteSellers extends SQLite {
                 int key = rs.getInt("key");
                 String traderKey = rs.getString("trader");
                 String type = rs.getString("type");
-                String saler = rs.getString("saler");
-                sellers.put(key, getSaler(key, traderKey, type, saler));
+                String seller = rs.getString("seller");
+                sellers.put(key, getSeller(traderKey, type, seller));
             }
         } catch (SQLException ex) {
             shopPlugin.getLogger().log(Level.SEVERE, "Error executing SQL query", ex);
@@ -105,7 +107,7 @@ public class SQLiteSellers extends SQLite {
     }
 
     public AbstractSeller getSellerByKey(Integer key) {
-        String sql = "SELECT trader, type, saler FROM sellerList WHERE key = ?";
+        String sql = "SELECT trader, type, seller FROM sellerList WHERE key = ?";
         try (Connection conn = getSQLConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, key);
@@ -113,8 +115,8 @@ public class SQLiteSellers extends SQLite {
             if (rs.next()) {
                 String traderKey = rs.getString("trader");
                 String type = rs.getString("type");
-                String serializedData = rs.getString("saler");
-                return getSaler(key, traderKey, type, serializedData);
+                String serializedData = rs.getString("seller");
+                return getSeller(traderKey, type, serializedData);
             } else {
                 shopPlugin.getServer().getLogger().info("No seller found for key: " + key);
                 return null;
@@ -125,32 +127,39 @@ public class SQLiteSellers extends SQLite {
         }
     }
 
-    public AbstractSeller getSaler(int key, String traderKey, String typeName, String serializedData) {
-        AbstractSeller saler = null;
+    public AbstractSeller getSeller(String traderKey, String typeName, String serializedData) {
+        AbstractSeller seller = null;
         try {
-            SellerType type = SellerType.valueOf(typeName);
+            SellerType type = SellerType.valueOf(typeName.toUpperCase());
             switch (type) {
                 case ENTITY:
-                    saler = EntitySeller.deserialize(serializedData);
+                    seller = EntitySeller.deserialize(serializedData);
+                    break;
+                case VILLAGER:
+                case WANDERING_TRADER:
+                    seller = VillagerSeller.deserialize(serializedData);
                     break;
                 case SIGN:
-                    saler = SignSeller.deserialize(serializedData);
+                    seller = SignSeller.deserialize(serializedData);
                     break;
                 case BUTTON:
                 case LEVER:
                 case DOOR:
-                    saler = MechanicalSeller.deserialize(serializedData);
+                    seller = MechanicalSeller.deserialize(serializedData);
                     break;
+			default:
+				break;
             }
         } catch (IllegalArgumentException e) {
             shopPlugin.getLogger().log(Level.SEVERE, "Unknown SalerType: " + typeName, e);
             return null;
         }
 
-        if (saler != null && saler.hashCode() == key) {
-            Trader trader = new Trader(traderKey, null, null);
-            saler.setTrader(trader);
+        if (seller != null) {
+            Trader trader = new Trader(traderKey, traderKey, new ArrayList<>());
+            seller.setTrader(trader);
+        	
         }
-        return saler;
+        return seller;
     }
 }

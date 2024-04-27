@@ -61,7 +61,13 @@ shop_err_no_trader_found_key: "Kein Händler für Schlüssel '%s' gefunden"
 shop_seller_success_replace_trade: "Für Verkäufer '%s', Händlerartikel ersetzt mit %s"
 shop_err_seller_not_found: "Verkäufer mit Nummer '%s' nicht gefunden"
 shop_err_seller_trade_not_found: "Keine Handel für Verkäufer '%s' gefunden"
-shop_hover_click_to_copy: "Klicken, um '%s' in die Zwischenablage zu kopieren"
+shop_hover_click_to_copy: "&2Klicken, um '&3%s&2' in die Zwischenablage zu kopieren"
+shop_seller_success_remove: "Verkäufer mit Schlüssel '%s' entfernt"
+shop_err_seller_noview_type: "Das Ziel, das Sie betrachten, kann kein Verkäufer sein"
+shop_err_no_sellers_found: "Keine Verkäufer gefunden."
+shop_trader_list_info: "&2Händler: '&3%s&2', Name: '&3%s&2', Anzahl der Handel: '&3%s&2'"
+
+
 
 
 

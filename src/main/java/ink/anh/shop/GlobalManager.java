@@ -97,7 +97,8 @@ public class GlobalManager extends LibraryManager {
         debug = shopPlugin.getConfig().getBoolean("debug", false);
         setLanguageManager();
 	    traderManager = TraderManager.getInstance(shopPlugin);
-	    sellersManager.synchronizeSalersAndTraders(traderManager);
+		sellersManager = SellersManager.getInstance();
+	    sellersManager.synchronizeSellersAndTraders(traderManager);
     }
 
     private void saveDefaultConfig() {
@@ -132,7 +133,7 @@ public class GlobalManager extends LibraryManager {
 	            shopPlugin.reloadConfig();
 	            loadFields(shopPlugin);
 	            traderManager.reloadTraders();
-	    	    sellersManager.synchronizeSalersAndTraders(traderManager);
+	    	    sellersManager.synchronizeSellersAndTraders(traderManager);
 	            Logger.info(shopPlugin, Translator.translateKyeWorld(instance, "shop_configuration_reloaded" , new String[] {defaultLang}));
 	        } catch (Exception e) {
 	            e.printStackTrace();

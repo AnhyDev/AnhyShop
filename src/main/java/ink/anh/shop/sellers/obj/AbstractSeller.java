@@ -5,6 +5,7 @@ import ink.anh.shop.trading.Trader;
 public abstract class AbstractSeller {
 	
     transient private Trader trader;  // Gson ігнорує це поле під час серіалізації
+    transient private String serializeKey;  // Gson ігнорує це поле під час серіалізації
 
     public abstract SellerType getSellerType();
     public abstract void performAction();
@@ -27,27 +28,27 @@ public abstract class AbstractSeller {
     @Override
     public int hashCode() {
         int result = 17;
-        result = 31 * result + (getSellerType() != null ? getSellerType().hashCode() : 0);
-        result = 31 * result + (getAdditionalDetails() != null ? getAdditionalDetails().hashCode() : 0);
-        return result;
+        result = 31 * result + (serializeKey != null ? serializeKey.hashCode() : 0);
+        return (result & Integer.MAX_VALUE) + 17; // Забезпечення позитивного значення
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null || getClass() != obj.getClass()) {
-            return false;
-        }
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
         AbstractSeller other = (AbstractSeller) obj;
-        if (getSellerType() != other.getSellerType()) {
-            return false;
-        }
-        if (getAdditionalDetails() == null) {
-            return other.getAdditionalDetails() == null;
-        } else {
-            return getAdditionalDetails().equals(other.getAdditionalDetails());
-        }
+        return serializeKey.equals(other.serializeKey);
     }
+    
+	public String getSerializeKey() {
+		return serializeKey;
+	}
+	
+	public void setSerializeKey(String key) {
+		this.serializeKey = key;
+	}
+	
+	public void setSerializeKey() {
+		this.serializeKey = serialize();
+	}
 }
