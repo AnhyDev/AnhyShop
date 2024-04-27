@@ -69,8 +69,7 @@ public class TargetResolver extends Sender {
             sendMessage(new MessageForFormatting("shop_err_save_data_base", new String[] {saler.getAdditionalDetails()}), MessageType.WARNING, player);
 			return false;
 		}
-		
-		// message
+        sendMessage(new MessageForFormatting("shop_err_save_already_exists", new String[] {saler.getAdditionalDetails()}), MessageType.WARNING, player);
 		return false;
     }
     

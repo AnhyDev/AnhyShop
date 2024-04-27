@@ -12,6 +12,8 @@ import ink.anh.shop.trading.Trader;
 import ink.anh.shop.utils.OtherUtils;
 import ink.anh.shop.utils.RandomStringGenerator;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class TraderCreator extends Sender {
 
@@ -50,25 +52,33 @@ public class TraderCreator extends Sender {
     }
 
     public boolean deleteTrader(CommandSender sender, String[] args) {
-    	
-    	String[] langs = OtherUtils.checkPlayerPermissions(sender, Permissions.TRADE_DELETE);
-	    if (langs != null && langs[0] == null) {
+        
+        String[] langs = OtherUtils.checkPlayerPermissions(sender, Permissions.TRADE_DELETE);
+        if (langs != null && langs[0] == null) {
             return true;
-	    }
+        }
         
         if (args.length < 2) {
-            sendMessage(new MessageForFormatting("shop_err_enter_trader_key ", null), MessageType.WARNING, sender);
+            sendMessage(new MessageForFormatting("shop_err_enter_trader_key", null), MessageType.WARNING, sender);
             return true;
         }
 
         String key = args[1];
         if (traderManager.getTrader(key) == null) {
-            sendMessage(new MessageForFormatting("shop_err_no_trader_found_key ", null), MessageType.WARNING, sender);
+            sendMessage(new MessageForFormatting("shop_err_no_trader_found_key", null), MessageType.WARNING, sender);
             return true;
         }
 
-        traderManager.removeTrader(key);
-        sendMessage(new MessageForFormatting("shop_removed_merchant_key %s", new String[] {key}), MessageType.NORMAL, sender);
+        List<Integer> removedSellersKeys = traderManager.removeTrader(key);
+        if (removedSellersKeys != null && !removedSellersKeys.isEmpty()) {
+            String removedKeysString = removedSellersKeys.stream()
+                .map(Object::toString)
+                .collect(Collectors.joining(", "));
+            sendMessage(new MessageForFormatting("shop_removed_merchant2_key", new String[] {key, removedKeysString}), MessageType.NORMAL, sender);
+        } else {
+            sendMessage(new MessageForFormatting("shop_removed_merchant_key %s", new String[] {key}), MessageType.NORMAL, sender);
+        }
+
         return true;
     }
 }

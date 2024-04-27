@@ -3,6 +3,7 @@ package ink.anh.shop.sellers;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -89,7 +90,7 @@ public class SellersManager {
         return result;
     }
 
-    public boolean removeSellers(Trader trader) {
+    public List<Integer> removeSellers(Trader trader) {
         List<Integer> keysToRemove = sellerList.entrySet()
             .stream()
             .filter(entry -> trader.equals(entry.getValue().getTrader()))
@@ -100,13 +101,13 @@ public class SellersManager {
             try {
                 db.deleteSellers(keysToRemove);
                 keysToRemove.forEach(sellerList::remove);
-                return true;
+                return keysToRemove;
             } catch (Exception e) {
                 shopPlugin.getLogger().log(Level.SEVERE, "Error removing traders from database", e);
-                return false;
+                return Collections.emptyList();
             }
         }
-        return false;
+        return keysToRemove;
     }
 
     public AbstractSeller getSeller(int key) {

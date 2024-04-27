@@ -52,12 +52,14 @@ public class TraderManager {
     }
 
     // Видалення трейдера
-    public void removeTrader(String key) {
+    public List<Integer> removeTrader(String key) {
         Trader trader = traderMap.remove(key);
         if (trader != null) {
             delTrader(trader); // Видаляємо з бази даних
-            SellersManager.getInstance().removeSellers(trader); // Видаляємо продавців, пов'язаних з трейдером
+            List<Integer> removedSellers = SellersManager.getInstance().removeSellers(trader); // Видаляємо продавців, пов'язаних з трейдером
+            return removedSellers;
         }
+        return null; // Повертаємо null у випадку, якщо трейдер не знайдений або виникла помилка під час видалення
     }
 
     public List<Trader> getAllTraders() {
