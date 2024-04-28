@@ -1,5 +1,5 @@
 # AnhyShop
-Is a unique plugin for creating merchants and trading on Minecraft servers, based on the trading inventory of villagers. Tested on `Spigot`, `Paper`, `Purpur` server cores, version `1.20.2`.
+Is a unique plugin for creating merchants and trading on Minecraft servers, based on the trading inventory of villagers. Tested on `Spigot`, `Paper`, `Purpur` server cores, version `1.20.4`.
 
 ### Essential Dependencies for [**AnhyShop**](https://dev.anh.ink/anhyshop/)
 The primary requirement for **AnhyShop** to function is the installation of the [**AnhyLibAPI**](https://dev.anh.ink/anhylibapi/) library version 1.5.2 or higher. Without **AnhyLibAPI**, **AnhyShop** will not operate. It provides translation of system messages and multilingual names for merchants.
