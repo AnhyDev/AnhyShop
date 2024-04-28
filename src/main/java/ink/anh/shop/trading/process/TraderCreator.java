@@ -34,7 +34,7 @@ public class TraderCreator extends Sender {
 	    }
         
         if (args.length < 2) {
-            sendMessage(new MessageForFormatting("shop_err_enter_name_trader ", null), MessageType.WARNING, sender);
+            sendMessage(new MessageForFormatting("shop_err_enter_name_trader ", new String[] {}), MessageType.WARNING, sender);
             return true;
         }
 
@@ -59,13 +59,13 @@ public class TraderCreator extends Sender {
         }
         
         if (args.length < 2) {
-            sendMessage(new MessageForFormatting("shop_err_enter_trader_key", null), MessageType.WARNING, sender);
+            sendMessage(new MessageForFormatting("shop_err_enter_trader_key", new String[] {}), MessageType.WARNING, sender);
             return true;
         }
 
         String key = args[1];
         if (traderManager.getTrader(key) == null) {
-            sendMessage(new MessageForFormatting("shop_err_no_trader_found_key", null), MessageType.WARNING, sender);
+            sendMessage(new MessageForFormatting("shop_err_no_trader_found_key", new String[] {}), MessageType.WARNING, sender);
             return true;
         }
 

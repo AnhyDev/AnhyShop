@@ -69,7 +69,7 @@ public class CommandShop extends Sender implements CommandExecutor {
 	    }
 	    
         if (shopPlugin.getGlobalManager().reload()) {
-            sendMessage(new MessageForFormatting("shop_language_reloaded ", null), MessageType.NORMAL, sender);
+            sendMessage(new MessageForFormatting("shop_language_reloaded ", new String[] {}), MessageType.NORMAL, sender);
             return true;
         }
         return false;

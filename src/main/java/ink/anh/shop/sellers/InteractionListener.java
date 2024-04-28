@@ -149,7 +149,7 @@ public class InteractionListener extends Sender implements Listener {
         }
         
         if (!VirtualVillager.openTrading(player, trader)) {
-            sendMessage(new MessageForFormatting("shop_err_not_possible_open_trade", null), MessageType.WARNING, player);
+            sendMessage(new MessageForFormatting("shop_err_not_possible_open_trade", new String[] {}), MessageType.WARNING, player);
             return false;  // Не скасовуємо стандартну взаємодію, бо торгівля не була відкрита
         }
 

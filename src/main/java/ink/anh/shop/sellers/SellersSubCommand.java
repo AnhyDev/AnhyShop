@@ -34,6 +34,11 @@ public class SellersSubCommand extends Sender {
             sendMessage(new MessageForFormatting("shop_err_command_format %s ", new String[]{"/shop seller <args ...>"}), MessageType.WARNING, sender);
             return true;
         }
+        
+        if (sender instanceof Player && !sender.hasPermission(Permissions.TRADE_SELLER)) {
+            sendMessage(new MessageForFormatting("shop_err_not_have_permission", new String[]{}), MessageType.WARNING, sender);
+            return true;
+        }
 
         switch (args[1].toLowerCase()) {
             case "add":
@@ -114,7 +119,7 @@ public class SellersSubCommand extends Sender {
             
             Player player = (Player) sender;
             if (!VirtualVillager.openTrading(player, trader)) {
-                sendMessage(new MessageForFormatting("shop_err_not_possible_open_trade", null), MessageType.WARNING, player);
+                sendMessage(new MessageForFormatting("shop_err_not_possible_open_trade", new String[] {}), MessageType.WARNING, player);
                 return;
             }
         } else {
@@ -190,7 +195,7 @@ public class SellersSubCommand extends Sender {
             Messenger.sendMessage(libraryManager.getPlugin(), sender, mBuilder.build(), consoleMessage.toString());
 
         } else {
-            sendMessage(new MessageForFormatting("shop_err_no_sellers_found", null), MessageType.WARNING, sender);
+            sendMessage(new MessageForFormatting("shop_err_no_sellers_found", new String[] {}), MessageType.WARNING, sender);
         }
     }
 

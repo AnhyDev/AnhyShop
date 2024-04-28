@@ -11,4 +11,5 @@ public class Permissions {
     public static final String TRADE_ADD = "anhyshop.product.add";
     public static final String TRADE_REPLACE = "anhyshop.product.replace";
     public static final String TRADE_REMOVE = "anhyshop.product.remove";
+    public static final String TRADE_SELLER = "anhyshop.seller";
 }

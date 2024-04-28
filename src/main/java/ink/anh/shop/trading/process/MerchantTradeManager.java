@@ -59,7 +59,7 @@ public class MerchantTradeManager extends Sender {
         ItemStack rt = tradeItems[2];
         for (Trade existingTrade : trader.getTrades()) {
             if (existingTrade.getRewardItem().isSimilar(rt)) {
-                sendMessage(new MessageForFormatting("shop_err_trade_already_exists ", null), MessageType.WARNING, sender);
+                sendMessage(new MessageForFormatting("shop_err_trade_already_exists ", new String[] {}), MessageType.WARNING, sender);
                 return true;
             }
         }
@@ -108,7 +108,7 @@ public class MerchantTradeManager extends Sender {
         }
 
         if (!tradeReplaced) {
-            sendMessage(new MessageForFormatting("shop_no_trades_found_create_new_trade ", null), MessageType.WARNING, sender);
+            sendMessage(new MessageForFormatting("shop_no_trades_found_create_new_trade ", new String[] {}), MessageType.WARNING, sender);
             Trade newTrade = new Trade(tradeItems[0], tradeItems[1], rt);
             trader.addTrade(newTrade);
         }
@@ -138,7 +138,7 @@ public class MerchantTradeManager extends Sender {
         Player player = (Player) sender;
         ItemStack rt = player.getInventory().getItem(2);
         if (rt == null || rt.getType().isAir()) {
-            sendMessage(new MessageForFormatting("shop_err_no_found_reward_item ", null), MessageType.WARNING, sender);
+            sendMessage(new MessageForFormatting("shop_err_no_found_reward_item ", new String[] {}), MessageType.WARNING, sender);
             return true;
         }
 
@@ -152,7 +152,7 @@ public class MerchantTradeManager extends Sender {
         }
 
         if (!tradeRemoved) {
-            sendMessage(new MessageForFormatting("shop_err_no_rew_trades_found ", null), MessageType.WARNING, sender);
+            sendMessage(new MessageForFormatting("shop_err_no_rew_trades_found ", new String[] {}), MessageType.WARNING, sender);
             return true;
         }
 
@@ -170,7 +170,7 @@ public class MerchantTradeManager extends Sender {
 	    }
 	    
         if (args.length < 3) {
-            sendMessage(new MessageForFormatting("shop_err_key_trader_nickname_player ", null), MessageType.WARNING, sender);
+            sendMessage(new MessageForFormatting("shop_err_key_trader_nickname_player ", new String[] {}), MessageType.WARNING, sender);
             return true;
         }
 
@@ -183,7 +183,7 @@ public class MerchantTradeManager extends Sender {
         String playerName = args[2];
         Player player = shopPlugin.getServer().getPlayer(playerName);
         if (player == null) {
-            sendMessage(new MessageForFormatting("shop_err_no_player_found_nickname ", null), MessageType.WARNING, sender);
+            sendMessage(new MessageForFormatting("shop_err_no_player_found_nickname ", new String[] {}), MessageType.WARNING, sender);
             return true;
         }
 
@@ -258,7 +258,7 @@ public class MerchantTradeManager extends Sender {
         
         List<Trader> traders = traderManager.getAllTraders();
         if (traders.isEmpty()) {
-            sendMessage(new MessageForFormatting("shop_err_no_traders_found ", null), MessageType.WARNING, sender);
+            sendMessage(new MessageForFormatting("shop_err_no_traders_found ", new String[] {}), MessageType.WARNING, sender);
             return true;
         }
 
@@ -294,7 +294,7 @@ public class MerchantTradeManager extends Sender {
 
     private boolean isPlayer(CommandSender sender) {
         if (!(sender instanceof Player)) {
-            sendMessage(new MessageForFormatting("shop_err_command_only_player ", null), MessageType.WARNING, sender);
+            sendMessage(new MessageForFormatting("shop_err_command_only_player ", new String[] {}), MessageType.WARNING, sender);
             return false;
         }
         return true;
@@ -303,7 +303,7 @@ public class MerchantTradeManager extends Sender {
     private Trader getTrader(CommandSender sender, String traderKey) {
         Trader trader = traderManager.getTrader(traderKey);
         if (trader == null) {
-            sendMessage(new MessageForFormatting("shop_err_no_trader_found_key ", null), MessageType.WARNING, sender);
+            sendMessage(new MessageForFormatting("shop_err_no_trader_found_key ", new String[] {}), MessageType.WARNING, sender);
         }
         return trader;
     }
@@ -334,7 +334,7 @@ public class MerchantTradeManager extends Sender {
         ItemStack rt = tradeItems[2];
 
         if ((i1 == null || i1.getType().isAir()) && (i2 == null || i2.getType().isAir()) || rt == null || rt.getType().isAir()) {
-            sendMessage(new MessageForFormatting("shop_err_no_required_items_slots ", null), MessageType.WARNING, sender);
+            sendMessage(new MessageForFormatting("shop_err_no_required_items_slots ", new String[] {}), MessageType.WARNING, sender);
             return false;
         }
         return true;

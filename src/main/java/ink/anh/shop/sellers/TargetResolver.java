@@ -46,7 +46,7 @@ public class TargetResolver extends Sender {
     public boolean interimMethod(Player player, String traderKey) {
     	AbstractSeller saler = resolveTarget(player);
     	if (saler == null) {
-            sendMessage(new MessageForFormatting("shop_err_seller_noview_type", null), MessageType.WARNING, player);
+            sendMessage(new MessageForFormatting("shop_err_seller_noview_type", new String[] {}), MessageType.WARNING, player);
     		return false;
     	}
     	Trader trader = shopPlugin.getGlobalManager().getTraderManager().getTrader(traderKey);

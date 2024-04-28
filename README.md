@@ -52,6 +52,40 @@ trader_name_eldon: Eldon Ironfoot
 trader_name_aurora: Aurora Skydancer
 trader_name_gideon: Gideon Goldspinner
 ```
+### Expanded Functionality of AnhyShop Plugin Version 1.0.0
+
+**AnhyShop** in version 1.0.0 introduces a new concept of "Sellers," which allow players to interactively trade with merchants through in-game objects. This enhances the trading experience by providing a more dynamic and convenient management of trading processes on the server.
+
+#### Key Features of "Sellers":
+
+1. **Types of "Sellers"**:
+   - **Mechanical Objects**: Buttons, doors, levers are identified by their type and the exact coordinates of their location.
+   - **Signs**: Identification is based on the material type and the text displayed on the sign. Signs can be placed in different locations, but the text on them will determine a single "Seller."
+   - **Mobs with Custom Names**: Utilizes the type of mob and its unique name for identification. Only mobs with custom names can become "Sellers."
+   - **Wandering Traders**: All wandering traders, once linked, are recognized as one "Seller," allowing for a uniform change to their trading inventories.
+   - **Villagers**: Identified by profession and level. Creating a "Seller" from a villager of a specific profession and level replaces standard trade operations for all similar villagers.
+
+#### Commands to Manage "Sellers":
+
+**Note**: All the commands listed below are available only to players with the `anhyshop.seller` permission.
+
+- **Creating a "Seller"**:
+  - **Command**: `/shop seller add <trader_key>`
+  - **Description**: Creates a "Seller" from the object the player is looking at, linking it to a selected trader using a unique key `<trader_key>`. The player must be within 5 blocks of the object.
+
+- **Removing a "Seller"**:
+  - **Command**: `/shop seller remove <seller_id>`
+  - **Description**: Removes a "Seller" using its unique numerical identifier `<seller_id>`.
+
+- **Viewing Information about a "Seller"**:
+  - **Command**: `/shop seller view <seller_id>`
+  - **Description**: Displays detailed information about the "Seller," including its type, location, linked trader, and identifier.
+
+- **Listing All "Sellers"**:
+  - **Command**: `/shop seller list`
+  - **Description**: Displays a list of all existing "Sellers," with the ability to copy `<seller_id>` to the clipboard, simplifying the management of identifiers for further operations.
+
+These updates significantly enhance player interactions with traders, providing greater control and customization options for trading processes on Minecraft servers.
 
 ### Language Personalization
 **Multilingual Functionality in AnhyShop with AnhyLibAPI and AnhyLingo Integration**
