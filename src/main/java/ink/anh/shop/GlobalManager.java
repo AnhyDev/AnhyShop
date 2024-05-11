@@ -18,16 +18,16 @@ import net.md_5.bungee.api.ChatColor;
 
 public class GlobalManager extends LibraryManager {
 
-    private static GlobalManager instance;
+	private static GlobalManager instance;
 	private AnhyShop shopPlugin;
 	private Plugin anhyLingo;
 	
 	private LanguageManager langManager;
 	private TraderManager traderManager;
 	private SellersManager sellersManager;
-    private String pluginName;
-    private String defaultLang;
-    private boolean debug;
+	private String pluginName;
+	private String defaultLang;
+	private boolean debug;
 	
 	private GlobalManager(AnhyShop shopPlugin) {
 		super(shopPlugin);
@@ -36,12 +36,12 @@ public class GlobalManager extends LibraryManager {
 		this.loadFields(shopPlugin);
 	}
 
-    public static synchronized GlobalManager getManager(AnhyShop shopPlugin) {
-        if (instance == null) {
-            instance = new GlobalManager(shopPlugin);
-        }
-        return instance;
-    }
+	public static synchronized GlobalManager getManager(AnhyShop shopPlugin) {
+		if (instance == null) {
+			instance = new GlobalManager(shopPlugin);
+		}
+		return instance;
+	}
 
 	public Plugin getAnhyLingo() {
 		return anhyLingo;

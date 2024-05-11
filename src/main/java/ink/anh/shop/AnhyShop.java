@@ -21,11 +21,11 @@ public class AnhyShop extends JavaPlugin {
     @Override
     public void onEnable() {
     	instance = this;
-		sqlite = new SQLite(this);
-		sqlite.load();
-		manager = GlobalManager.getManager(this);
-        this.getCommand("shop").setExecutor(new CommandShop(this));
-        getServer().getPluginManager().registerEvents(new InteractionListener(this), this);
+    	sqlite = new SQLite(this);
+    	sqlite.load();
+    	manager = GlobalManager.getManager(this);
+    	this.getCommand("shop").setExecutor(new CommandShop(this));
+    	getServer().getPluginManager().registerEvents(new InteractionListener(this), this);
     }
     
 	public static AnhyShop getInstance() {
