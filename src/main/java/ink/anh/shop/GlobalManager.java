@@ -1,9 +1,6 @@
 package ink.anh.shop;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
@@ -141,20 +138,5 @@ public class GlobalManager extends LibraryManager {
 	        }
 		});
         return true;
-    }
-	
-	public static List<String> logo() {
-        List<String> asciiArt = new ArrayList<>();
-
-        asciiArt.add("");
-        asciiArt.add(" ░█████╗░███╗░░██╗██╗░░██╗██╗░░░██╗░██████╗██╗░░██╗░█████╗░██████╗░");
-        asciiArt.add(" ██╔══██╗████╗░██║██║░░██║╚██╗░██╔╝██╔════╝██║░░██║██╔══██╗██╔══██╗");
-        asciiArt.add(" ███████║██╔██╗██║███████║░╚████╔╝░╚█████╗░███████║██║░░██║██████╔╝");
-        asciiArt.add(" ██╔══██║██║╚████║██╔══██║░░╚██╔╝░░░╚═══██╗██╔══██║██║░░██║██╔═══╝░");
-        asciiArt.add(" ██║░░██║██║░╚███║██║░░██║░░░██║░░░██████╔╝██║░░██║╚█████╔╝██║░░░░░");
-        asciiArt.add(" ╚═╝░░╚═╝╚═╝░░╚══╝╚═╝░░╚═╝░░░╚═╝░░░╚═════╝░╚═╝░░╚═╝░╚════╝░╚═╝░░░░░");
-        asciiArt.add("");
-
-        return asciiArt;
     }
 }
