@@ -24,8 +24,18 @@ public class OtherUtils {
 	
 	public static String getServerVersion() {
 	    String packageName = Bukkit.getServer().getClass().getPackage().getName();
-	    // Версія сервера знаходиться у вигляді 'v1_XX_RY', де XX - версія Minecraft, а Y - ревізія
-	    return packageName.substring(packageName.lastIndexOf('.') + 1);
+	    
+	    if (!packageName.equals("org.bukkit.craftbukkit")) {
+	    	return packageName.substring(packageName.lastIndexOf('.') + 1);
+	    } else {
+	    	String bukkitVersion =  Bukkit.getServer().getBukkitVersion().replaceAll("-R0.1-SNAPSHOT", "");
+	    	
+		    String[] parts = bukkitVersion.split("\\.");
+		    
+		    String nmsVersion = "v" + parts[0] + "_" + parts[1] + "_R" + (Integer.parseInt(parts[2]) - 1);
+		    
+		    return nmsVersion;
+	    }
 	}
 	
 	public static String[] getLangs(CommandSender sender) {
