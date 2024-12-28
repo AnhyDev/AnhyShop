@@ -61,7 +61,6 @@ public class VirtualVillager {
         String version = OtherUtils.getServerVersion();
         Class<?> craftItemStackClass;
         Method asCraftCopyMethod;
-<<<<<<< HEAD
 
         try {
             craftItemStackClass = Class.forName("org.bukkit.craftbukkit." + version + ".inventory.CraftItemStack");
@@ -83,26 +82,7 @@ public class VirtualVillager {
             } catch (Exception e) {
                 Logger.error(manager.getPlugin(), "Failed to translate trade: " + e.getMessage());
             }
-=======
-        try {
-            craftItemStackClass = Class.forName("org.bukkit.craftbukkit." + version + ".inventory.CraftItemStack");
-            asCraftCopyMethod = craftItemStackClass.getMethod("asCraftCopy", ItemStack.class);
-        } catch (ClassNotFoundException | NoSuchMethodException e) {
-            e.printStackTrace();
-            return new ArrayList<>();
         }
-
-        List<Trade> translatedTrades = new ArrayList<>();
-        for (Trade trade : trades) {
-            ItemStack item1 = translateItem(trade.getItem1(), asCraftCopyMethod, langs);
-            ItemStack item2 = translateItem(trade.getItem2(), asCraftCopyMethod, langs);
-            ItemStack rewardItem = translateItem(trade.getRewardItem(), asCraftCopyMethod, langs);
-
-            Trade translatedTrade = new Trade(trade.getId(), item1, item2, rewardItem);
-            translatedTrades.add(translatedTrade);
->>>>>>> branch 'main' of https://github.com/AnhyDev/AnhyShop.git
-        }
-
         return translatedTrades;
     }
 

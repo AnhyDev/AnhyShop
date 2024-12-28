@@ -11,28 +11,12 @@ import java.util.logging.Level;
 import ink.anh.api.messages.Logger;
 import ink.anh.shop.AnhyShop;
 
-
-<<<<<<< HEAD
-<<<<<<< HEAD
 public class SQLite extends Database {
 
-	private String dbname;
-
-    public SQLite(AnhyShop shopPlugin) {
-=======
-public class SQLite extends Database{
 
 	private String dbname;
 
     public SQLite(AnhyShop shopPlugin){
->>>>>>> branch 'main' of https://github.com/AnhyDev/AnhyShop.git
-=======
-public class SQLite extends Database{
-
-	private String dbname;
-
-    public SQLite(AnhyShop shopPlugin){
->>>>>>> branch 'main' of https://github.com/AnhyDev/AnhyShop.git
         super(shopPlugin);
         dbname =  "shop";
     }

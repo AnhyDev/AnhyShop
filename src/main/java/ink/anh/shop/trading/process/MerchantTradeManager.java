@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import ink.anh.api.lingo.Translator;
+import ink.anh.api.messages.Logger;
 import ink.anh.api.messages.MessageComponents;
 import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;
@@ -267,12 +268,17 @@ public class MerchantTradeManager extends Sender {
         
         for (Trader trader : traders) {
         	String traderKey = trader.getKey();
+        	Logger.warn(shopPlugin, traderKey);
         	
             String hoverMessage = StringUtils.formatString(Translator.translateKyeWorld(libraryManager, "shop_hover_click_to_copy", langs), new String[] {traderKey});
-
+            Logger.warn(shopPlugin, hoverMessage);
+            
             String traderName = Translator.translateKyeWorld(libraryManager, trader.getName(), langs);
+            Logger.warn(shopPlugin, traderName);
+            
             String message = StringUtils.formatString(Translator.translateKyeWorld(libraryManager, "shop_trader_list_info", langs),
             		new String[]{traderKey, traderName, String.valueOf(trader.getTrades().size())});
+            Logger.warn(shopPlugin, message);
             
             MessageComponents traderComponent = MessageComponents.builder()
             		.content(message)
